@@ -1,0 +1,18 @@
+Pro soustavy:
+K = 0.82
+T1 = 86.6
+T2 = 18.2
+
+Inverze dynamiky
+tv = 2s
+TW = 1500 (velmi pomalý pochod)
+q0 = 0.6923
+q1 = -1.2979
+q2 = 0.6072
+
+
+TW = 60
+q0 = 17.036
+q1 = -31.94
+q2 = 14.94
+

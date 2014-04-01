@@ -10,7 +10,7 @@ Struktura souboru
 
 doc 		- dokumentace knihovny
 template 	- "sablony" zdrojovych kodu, ktere uzivatel prida do sve aplikace
-source		- zdrojove kody knihovny (napr. regulatory)
-include		- hlavickove soubory knihovny
+source		- zdrojove kody knihovny (napr. regulatory) vcetne hlavickovych souboru
 examples	- ukazkove programy knihovny
+support		- podpurny kod, napr. uart driver apod.
 
