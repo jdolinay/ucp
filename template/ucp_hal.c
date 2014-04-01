@@ -1,13 +1,16 @@
 /** @file ucp_hal.c 
-* @brief Hardware Abstraction Layer 
-* @note Uzivatelem implementovane low-level rutiny pro pouziti z ridici aplikace,
-* Specificke pro dany mikropocitac a danou aplikaci.
+* @brief Hardware Abstraction Layer - MCU-specific code provided by the user.
+*
+* @note Toto jsou funkce, ktere vyuziva UCP aplikace. Tyto funkce
+* musi implementovat sam uzivatel knihovny pro svuj konkretni hardware.
+* napr. pokud meri teplotu teplomerem s analogovym vystupem, bude ve
+* funkci ucphal_read_input() cist hodnotu z AD prevodniku.
 *
 */
 
 #include "ucp_hal.h"
 #include "ucp_swpwm.h"      /*  volitelne; softwarova PWM */
-#include "top_gb60.h"   /* ovladat modelu tepelne soustavy */
+//#include "top_gb60.h"   /* ovladat modelu tepelne soustavy */
 
 /** Inicializace potrebna pro funkce zde implementovane.
 * 
@@ -18,15 +21,14 @@
 */
 uint8_t ucphal_init(void)
 {
-     /* TODO:  implement */
-    ucp_pwm_setduty(1, 0);    /* Vystup na kanale 1 nastavit na 0 */
+     /* TODO:  add your hardware initialization */
     
-    // model tepelne soustavy: 
-    // Vystup = topeni on off na PTF7
-    // Vstup: funkce ovladace tepelne soustavy vyuziva casovac TPM2 pro mereni pulsu
-    InitTop(); 
-    GetTemp();   
+    // Priklad s vyuzitim softwarove PWM poskytovane v knihovne UCP 
+    // ucp_pwm_setduty(1, 0);    /* Vystup na kanale 1 nastavit na 0 */
     
+    // Priklad: model tepelne soustavy rizeny pomoci vlastniho ovladace 
+    // InitTop(); 
+           
     return 0;    
 }
 
@@ -39,6 +41,10 @@ uint8_t ucphal_init(void)
 */
 float ucphal_read_input(uint8_t channel)
 {
+    /* TODO: add code to read input for given control-channel */
+    
+    
+    /* Priklad pro cteni teploty pomoci ovladace pro model tepelne soustavy 
     float tmp;
     int rawtemp;
     static float old_val = 0.0f;
@@ -55,6 +61,7 @@ float ucphal_read_input(uint8_t channel)
         old_val = tmp;
         return tmp;
     }
+    */
         
     return 0.0f;
 }
@@ -75,7 +82,7 @@ void ucphal_write_output(uint8_t channel, float value)
     
     /* Priklad pro pouziti naseho SW PWM 
     Predpokladame, ze regulator vraci akcni zasah jako hodnotu 0 az 100 */
-    ucp_pwm_setduty(channel, (uint8_t)value);  
+    // ucp_pwm_setduty(channel, (uint8_t)value);  
    
 }
 
@@ -91,8 +98,8 @@ void ucphal_write_output(uint8_t channel, float value)
 float ucphal_read_setpoint(uint8_t channel)
 {
     /* TODO:  implement */
-    /* Napriklad ziskani hodnoty podle pozice potenciometru na kitu... */
-    return 50.0f;    
+    /* Napriklad zde muze byt ziskani hodnoty podle pozice potenciometru na kitu... */
+    return 0.0f;    
 }
 
 /* --- Nepovinne funkce ----- */
@@ -109,7 +116,8 @@ float ucphal_read_setpoint(uint8_t channel)
 void ucphal_write_pin(uint8_t channel, bool value)
 {
     /* TODO:  implement */
-    // Pro model tepelne sosustavy nemusime primo na piny, ale volame radeji funkce ovladace
+    /* Priklad pro model tepelne sosustavy s vyuzitim ovladace, tj. nemusime 
+    primo na piny, ale volame radeji funkce ovladace:
     if ( channel == 1 )
     {  
          if (value)
@@ -117,6 +125,7 @@ void ucphal_write_pin(uint8_t channel, bool value)
          else
             TopOff();
     }
+    */
     
     // ostatni kanaly ignorujeme
 }
