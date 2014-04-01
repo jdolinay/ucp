@@ -1,0 +1,16 @@
+1.4.2014
+
+UTB Control Package (UCP)
+Projekt regulatoru 
+Pro HCS08 a pak i pro kinetis.
+
+
+Struktura souboru
+------------------
+
+doc 		- dokumentace knihovny
+template 	- "sablony" zdrojovych kodu, ktere uzivatel prida do sve aplikace
+source		- zdrojove kody knihovny (napr. regulatory)
+include		- hlavickove soubory knihovny
+examples	- ukazkove programy knihovny
+

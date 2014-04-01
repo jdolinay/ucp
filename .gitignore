@@ -1,0 +1,7 @@
+*.dll
+*.o
+*.d
+*.map
+*.lss
+*.srec
+
