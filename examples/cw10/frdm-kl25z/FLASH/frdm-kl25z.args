@@ -1,0 +1,20 @@
+"./Project_Settings/Startup_Code/kinetis_sysinit.o"
+"./Project_Settings/Startup_Code/__arm_start.o"
+"./Project_Settings/Startup_Code/__arm_end.o"
+"./Sources/ucp_hal.o"
+"./Sources/ucp_app.o"
+"./Sources/sa_mtb.o"
+"./Sources/main.o"
+-mcpu=cortex-m0
+-mthumb
+-mfloat-abi=soft
+-g3
+-gdwarf-2
+-gstrict-dwarf
+-T"D:/Git/ucp/examples/cw10/frdm-kl25z/Project_Settings/Linker_Files/MKL25Z128_flash.ld"
+-Xlinker
+--gc-sections
+-L"C:/Freescale/CW MCU v10.5/MCU/ARM_GCC_Support/ewl/lib/armv6-m"
+-Wl,-Map,frdm-kl25z.map
+-n
+-specs=ewl_c_noio.specs
