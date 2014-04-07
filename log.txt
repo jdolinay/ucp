@@ -4,10 +4,32 @@ Projekt regulatoru
 Pro HCS08 a pak i pro kinetis.
 
 *****************************************************
+7.4.2014
+hOTOV BUILD OK PRO CW10.5 KINETIS A upraveny templates + projekt pro gb60 build ok.
+
 4.4.2014
+_pokracuj: vyresit problem s  _EWL_C99 abych mohl pouzit bool v cw10.5..
+
 - vytvoren projekt v cw10.5, ale ne ve workspace (odškrtnuta volba default location), vytvoøen
 v \examples\cw10\frdm-kl25z.
 Pokracuj: podle navodu zkusit udelat aplikaci s PSD, zatim s prazdnymi hal fceni, zjistit pripadnou nekompatibilitu kodu.
+Postup:
+- pridano include a volani app_x do main()
+- nakopirovany soubory z \template do projekt\sources
+- po refresh v cw se objeví v sources.
+_TODO: v této fázi by mìl být ideálnì projekt pøeložitelný - napø chybí swpwm.h > zakomentovat v templatech.
+_TODO: stdint je soucasti EWL; ale nezna bool; moje verze pro HC08 musi taky includovat zvlast stdint a stdbool abych nemusel delat ruzne verzi templates! 
+ >presunout definici bool do stdbool.h
+_TODO: \support clenit jeste podslozkami podle platformy (s08, kinetis) a pak asi napr. uart_gb60.c prejmenovat na jen uart.c a bude v jine podslozce > kody ktere pouzivaji nemuseji prepisovat jmena include souboru.
+- compiler nastaven na std=c99 ale nepomohlo to s problemem neznameho "bool".
+- define _EWL_C99=1 v preprocesor settings vede na chybu ze uz je defined - v lib_ewl.prefix, je tam i
+poznamka "EWL is not C99 compliant"
+ > proto nebudu resit zprovozneni ale pouziju vlastni bool.
+ > nutno prejmenovat soubory na ucp_stdbool.h jinak includuje standardni, ktere maji ifdef a nedaji se
+ rozumne rozchodit,viz vyse.
+- Do include paths dan \support (stdint.h) 
+
+_TODO: Aktualizovat templates po techto zmenach
 
 
 1.4.2014

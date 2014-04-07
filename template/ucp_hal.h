@@ -13,7 +13,10 @@
     #define  UCP_HAL_H
 
 /* Vlastni definice datovych typu, jako podle C99 */
-#include "stdint.h"
+//#include "stdint.h"	/* standard types included in EWL */
+#include "ucp_stdint.h"
+#include "ucp_stdbool.h"	/* our own bool type */
+
 
 /** The interface used by the user application */
 uint8_t ucphal_init(void);

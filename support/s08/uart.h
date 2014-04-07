@@ -14,7 +14,8 @@
 extern "C" {
 #endif
 
-#include "stdint.h"
+#include "ucp_stdint.h"
+#include "ucp_stdbool.h"
 
 /* baudrate constants for 20 MHz bus clock */
 typedef enum 

@@ -11,7 +11,7 @@
 #include "derivative.h" /* include peripheral declarations */
 #include <stdio.h>   /* for sprintf */
 
-#include "uart_gb60.h"
+#include "uart.h"
 
 
 #define LF 0x0A						// Line Feed ASCII code

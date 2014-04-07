@@ -7,7 +7,8 @@
     #define  UCP_PLANT_H
 
 /* Vlastni definice datovych typu, jako podle C99 */
-#include "stdint.h"
+#include "ucp_stdint.h"
+#include "ucp_stdbool.h"
 
 
 /** Data pro rizenou soustavu

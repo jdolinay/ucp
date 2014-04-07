@@ -20,7 +20,7 @@
 
 /** Regulatory */
 /* Zde definujte regulator(y) a jejich parametry */
-/* Priklad pro PSD regulator  *
+/* Priklad pro PSD regulator  */
 /* Parametry PSD regulatoru 1 */
 /*
 #define     Q0      (17.036)

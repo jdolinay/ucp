@@ -9,7 +9,7 @@
 */
 
 #include "ucp_hal.h"
-#include "ucp_swpwm.h"      /*  volitelne; softwarova PWM */
+//#include "ucp_swpwm.h"      /*  volitelne; softwarova PWM */
 //#include "top_gb60.h"   /* ovladat modelu tepelne soustavy */
 
 /** Inicializace potrebna pro funkce zde implementovane.
