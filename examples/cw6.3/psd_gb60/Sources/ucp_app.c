@@ -10,7 +10,7 @@
 #include "ucp_hal.h"
 #include "ucp_plant.h"
 
-#include "uart_gb60.h"
+#include "uart.h"
 
 /* Definovat jako 1, pokud se ma pouzit simulovana soustava. Pak je mozno
 v simulatoru dat breakpoint do app_on_sample a sledovat vypoctene hodnoty */

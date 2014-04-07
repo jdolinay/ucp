@@ -23,7 +23,7 @@
 
 #include "ucp_app.h"
 #include "ucp_swpwm.h"
-#include "uart_gb60.h"
+#include "uart.h"
 
 
 

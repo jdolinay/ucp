@@ -13,7 +13,8 @@
     #define  UCP_APP_H
 
 /* Vlastni definice datovych typu, jako podle C99 */
-#include "stdint.h"
+#include "ucp_stdint.h"
+#include "ucp_stdbool.h"
 
 /** The interface used by the user application */
 void ucp_app_init(void);
