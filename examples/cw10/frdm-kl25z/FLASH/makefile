@@ -2,7 +2,7 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-#Progress monitor hint: 7
+#Progress monitor hint: 8
 first : all
 -include ../makefile.init
 
@@ -58,7 +58,7 @@ all: warning-messages explicit-dependencies frdm-kl25z.elf secondary-outputs
 # Tool invocations
 frdm-kl25z.elf: $(OBJS) $(USER_OBJS) ../Project_Settings/Linker_Files/MKL25Z128_flash.ld
 	@echo 'Building target: $@'
-	@echo 'Executing target #8 $@'
+	@echo 'Executing target #9 $@'
 	@echo 'Invoking: ARM Ltd Windows GCC C Linker'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc"  $(USER_OBJS_QUOTED) $(LIBS_QUOTED) @"frdm-kl25z.args" -o"frdm-kl25z.elf"
 	@echo 'Finished building target: $@'

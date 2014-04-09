@@ -5,7 +5,9 @@
 -gdwarf-2
 -gstrict-dwarf
 -I"D:/Git/ucp/examples/cw10/frdm-kl25z/Project_Headers"
+-I"D:/Git/ucp/examples/cw10/frdm-kl25z/Sources"
 -I"D:/Git/ucp/support"
+-I"D:/Git/ucp/support/kinetis"
 -I"D:/Git/ucp/examples/cw10/frdm-kl25z/Project_Settings/Startup_Code"
 -I"C:/Freescale/CW MCU v10.5/MCU/ARM_GCC_Support/ewl/EWL_C/include"
 -I"C:/Freescale/CW MCU v10.5/MCU/ARM_GCC_Support/ewl/EWL_Runtime/include"

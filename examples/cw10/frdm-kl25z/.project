@@ -22,4 +22,16 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>Sources/uart.c</name>
+			<type>1</type>
+			<locationURI>PARENT-3-PROJECT_LOC/support/kinetis/uart.c</locationURI>
+		</link>
+		<link>
+			<name>Sources/uart.h</name>
+			<type>1</type>
+			<locationURI>PARENT-3-PROJECT_LOC/support/kinetis/uart.h</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
