@@ -4,6 +4,9 @@ Projekt regulatoru
 Pro HCS08 a pak i pro kinetis.
 
 *****************************************************
+11.4.2014
+- uart moji verze je ok, muze se pradat do MSF.
+
 9.4.2014
 - funguje uart_init moji verze s enum baud rate; mam pro default preq = 20,9 MHz i pro 
 max freq 48 MHz pouzitou u sample code package.

@@ -1,12 +1,16 @@
 /*
- * File:        uart.c
- * Purpose:     Provide common uart routines for serial IO
+ * @File        uart.c
+ * @brief     Provide common uart routines for Kinetis MCU; for UART0 only!
  *
- * Notes:  
+ * @Note  
+ * Initialises pins Tx = PTA1, Rx = PTA2 and clock source for UART to PLLFLLCLK
+ * 
  * The UART0 clock source is configured in SIM_SOPT2 register; by default
- * the CPU clock is 20.9 MHz and if PLL-FLL is selected as clock source, the
- * UART0 clock will be the same. (default is FLL mode, which feeds the same clock
- * to UART. If PLL mode is used, then the UART0 clock is PLL_clock/ 2 !
+ * the CPU clock is 20.9 MHz and if PLL-FLL is selected as UART0 clock source, 
+ * the UART clock will be also 20.9 MHz.
+ * If PLL is used as CPU clock source, then the UART0 clock is PLL_clock/ 2 !
+ * The UART0 clock source is set to PLL/FLL by this driver (this is one, the same option)
+ * it depends on the user code what is set as CPU clock.
  *
  * Zaklad kodu je z FRDM-KL25 sample code package     
  *              
@@ -17,24 +21,35 @@
 #include "uart.h"
 #include <stdarg.h>
 
-// TODO: resit povoleni pinu pro UART viz note u init nize
+
+#define LF 0x0A						// Line Feed ASCII code
+#define CR 0x0D						// Carriage Return ASCII code
+
  
 /********************************************************************/
-/*
- * Initialize the uart for 8N1 operation, interrupts disabled, and
+/** Initialize UART0 with given baudrate
+ * 
+ * @param speed baudrate constant, e.g. BD_115200 
+ *
+ * @note Initialize the uart for 8N1 operation, interrupts disabled, and
  * no hardware flow-control
  *
- * NOTE: Since the uarts are pinned out in multiple locations on most
- *       Kinetis devices, this driver does not enable uart pin functions.
- *       The desired pins should be enabled before calling this init function.
- *
- 
  */
  uint8_t uart_init(UART_speed_t speed)
 {
-    uint32 osr_val;
-    uint32 sbr_val;
-    uint32 reg_temp = 0;
+    uint32_t osr_val;
+    uint32_t sbr_val;
+    uint32_t reg_temp = 0;
+        
+    /* Enable clock for PORTA needed for Tx, Rx pins */
+    SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK;
+    		
+    /* Enable the UART_TXD function on PTA1 */
+    PORTA_PCR1 = PORT_PCR_MUX(0x2);		                  
+    /* Enable the UART_TXD function on PTA2 */
+    PORTA_PCR2 = PORT_PCR_MUX(0x2);
+    /* set clock for UART0 */
+    SIM_SOPT2 |= SIM_SOPT2_UART0SRC(1); // select the PLLFLLCLK as UART0 clock source
     
     
     osr_val = UART_GET_OSR(speed);
@@ -65,7 +80,7 @@
     reg_temp = UART0_BDH & ~(UART0_BDH_SBR(0x1F));
    
     UART0_BDH = reg_temp |  UART0_BDH_SBR(((sbr_val & 0x1F00) >> 8));
-    UART0_BDL = (uint8)(sbr_val & UART0_BDL_SBR_MASK);
+    UART0_BDL = (uint8_t)(sbr_val & UART0_BDL_SBR_MASK);
         
     /* Enable receiver and transmitter */
     UART0_C2 |= (UART0_C2_TE_MASK | UART0_C2_RE_MASK );
@@ -74,6 +89,120 @@
        
 }
  
+ /** Write single byte to SCI
+  * @param byte of data to write
+  **/
+ void uart_write(uint8_t data)
+ {
+	 /* Wait until space is available in the FIFO */
+	 while(!(UART0_S1_REG(UART0_BASE_PTR) & UART0_S1_TDRE_MASK));
+	    
+	 /* Send the character */
+	 UART0_D_REG(UART0_BASE_PTR) = data;
+ }
+ 
+ /** Read byte form SCI; wait for data to arrive!
+  * @return byte received from SCI.
+  **/
+ uint8_t uart_read(void)
+ {
+	 /* Wait until character has been received */
+	 while (!(UART0_S1_REG(UART0_BASE_PTR) & UART0_S1_RDRF_MASK));
+	     
+	 /* Return the 8-bit data from the receiver */
+	 return UART0_D_REG(UART0_BASE_PTR);
+ }
+ 
+ /** Check if data are available for reading
+  * @return true if there are data 
+ **/
+ bool uart_data_available(void)
+ {
+	 return ((UART0_S1_REG(UART0_BASE_PTR) & UART0_S1_RDRF_MASK) != 0);
+ }
+ 
+ 
+ /** Read one character from SCI.
+  * @return the character read.
+  * @note blocks the caller until character is received! 
+  **/
+ char uart_getc()               
+ {
+     return (char)uart_read();   
+ }
+ 
+ /** Send one character to SCI. If the char is '\n', send CR + LF
+  * @param char to send
+  **/
+ void uart_putchar(char c)        
+ {
+     if(c == '\n')
+     {	 				
+ 		uart_write(CR);
+ 		uart_write(LF);
+ 	} 
+     else 
+     {
+ 		uart_write(c);					
+ 	}
+ }
+
+ /** Send null-terminated string to SCI. 
+  * @param pointer to string to send
+  * @note If the string contains '\n', CR + LF are sent. 
+  **/
+ void uart_puts(const char* str)     
+ {
+     while(*str) 
+     {	
+ 		uart_putchar(*str);
+ 		str++;
+ 	}
+ }
+
+
+ /* Convenience global functions for output to UART */
+ // TODO: should be somehow possible to define where the output goes ? - which UART...
+ /** print line of text without new line
+  */
+ void msf_print(const char* str)    // print string
+ {
+     uart_puts(str);
+ } 
+ /** print line of text with new line
+  */
+ void msf_println(const char* str)   // print string with line end
+ {
+     uart_puts(str);
+     uart_putchar('\n');
+ }
+
+ /** print string with one formatted 16-bit number 
+ * @note max 8 chars for the resulting element in str!
+ */
+ void msf_printf16(const char* str, const char* format, uint16_t data)  
+ {
+     char buffer[9];
+     sprintf(buffer, format, data);
+     uart_puts(str);
+     uart_putchar(' ');
+     uart_puts(buffer);    
+ }
+ /** print string with one formatted 32-bit number 
+ * @note max 8 chars for the resulting element in str!
+ */
+ void msf_printf32(const char* str, const char* format, uint32_t data)  
+ {
+     char buffer[12];
+     sprintf(buffer, format, data);
+     uart_puts(str);
+     uart_putchar(' ');
+     uart_puts(buffer);    
+ } 
+ 
+ 
+ /* puvodni kod z FRDM--KL25Z sample code package */
+#if 0 
 /********************************************************************/
 /*
  * Wait for a character to be received on the specified uart
@@ -125,4 +254,4 @@ int uart0_getchar_present (UART0_MemMapPtr channel)
     return (UART0_S1_REG(channel) & UART0_S1_RDRF_MASK);
 }
 /********************************************************************/
-
+#endif

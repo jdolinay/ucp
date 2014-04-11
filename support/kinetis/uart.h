@@ -41,6 +41,8 @@ extern "C" {
  {
         BD_INVALID = 0,
         BD_9600 = UART_MAKE_BDVAL(20, 125),
+        BD_19200 = UART_MAKE_BDVAL(13, 96),
+        BD_57600 = UART_MAKE_BDVAL(13, 32),
         BD_115200 = UART_MAKE_BDVAL(13, 16), 
        
  };
@@ -49,6 +51,8 @@ extern "C" {
  {
         BD_INVALID = 0,
         BD_9600 = UART_MAKE_BDVAL(11, 198),
+        BD_19200 = UART_MAKE_BDVAL(11, 99),
+        BD_57600 = UART_MAKE_BDVAL(11, 33),
         BD_115200 = UART_MAKE_BDVAL(13, 14), 
        
  };
@@ -67,21 +71,21 @@ extern "C" {
 
  /* Public functions */
  uint8_t uart_init(UART_speed_t speed);  
-/* bool uart_data_available(void);
+ bool uart_data_available(void);
  void uart_write(uint8_t data);
  uint8_t uart_read(void);
  void uart_putchar(char c);        // send one character
  void uart_puts(const char* str);      // send null-terminated string
  char uart_getc();               // read one character (blocking)
-*/
+
  /* Convenience global functions for output to UART */
- /*void uart_printf16(const char* str, const char* format, uint16_t data);
+ void uart_printf16(const char* str, const char* format, uint16_t data);
  void uart_printf32(const char* str, const char* format, uint32_t data);  
  void uart_printf_float(const char* str, const char* format, float data);
-*/
 
 
 
+#if 0
 // jd: cislo SCI interface 
 #define TERM_PORT_NUM       0
 #define TERMINAL_BAUD       115200
@@ -107,6 +111,7 @@ typedef volatile uint16		vuint16; /* 16 bits */
 typedef volatile uint32		vuint32; /* 32 bits */
 
 
+/*
 //void uart_init (UART_MemMapPtr uartch, int sysclk, int baud);
 char uart_getchar (UART_MemMapPtr channel);
 void uart_putchar (UART_MemMapPtr channel, char ch);
@@ -115,8 +120,9 @@ void uart0_init (UART0_MemMapPtr uartch, int sysclk, int baud);
 char uart0_getchar (UART0_MemMapPtr channel);
 void uart0_putchar (UART0_MemMapPtr channel, char ch);
 int uart0_getchar_present (UART0_MemMapPtr channel);
-
+*/
 /********************************************************************/
+#endif
 
 #ifdef __cplusplus
 }

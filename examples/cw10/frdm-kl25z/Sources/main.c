@@ -33,7 +33,7 @@ int core_clk_khz;
 int periph_clk_khz;
 int pll_clk_khz;
 int uart0_clk_khz;
-uint32 uart0_clk_hz;
+uint32_t uart0_clk_hz;
 
 // jd: z mcg.h
 // Constants for use in pll_init
@@ -89,6 +89,7 @@ int main(void)
 	/* Enable all of the port clocks. These have to be enabled to configure
 	* pin muxing options, so most code will need all of these on anyway.
 	*/
+#if 0
 	SIM_SCGC5 |= (SIM_SCGC5_PORTA_MASK
 			| SIM_SCGC5_PORTB_MASK
 		| SIM_SCGC5_PORTC_MASK
@@ -102,6 +103,7 @@ int main(void)
 	PORTA_PCR2 = PORT_PCR_MUX(0x2);
 	// jd: toto je potreba jinak clock pro uart0 je disabled by default.
 	SIM_SOPT2 |= SIM_SOPT2_UART0SRC(1); // select the PLLFLLCLK as UART0 clock source
+#endif
 	
 	//clock_init();		/* set clock to 48 MHz */
 	// init SCI
@@ -114,7 +116,7 @@ int main(void)
 	   	//counter++;
 	   	//if ( counter == 0 )
 	   	//	ucp_app_on_sample();	// krok 3  (TODO: casovani)
-	   	sci_puts("ahoj ");
+	   	sci_puts("ahoja\n ");
 	   	delay();
 	   	delay();
 	}
@@ -154,11 +156,13 @@ void sci_init(void)
 
 void sci_puts(const char* str)
 {
+	uart_puts(str);
+	/*
 	while ( *str )
 	{
 		uart0_putchar (UART0_BASE_PTR, *str);
 		str++;
-	}
+	}*/
 }
 
 // jd: ze sample code pro FRDM-KL25Z, ze sysinit.c
@@ -221,8 +225,8 @@ void clock_init(void)
 	            periph_clk_khz = core_clk_khz / (((SIM_CLKDIV1 & SIM_CLKDIV1_OUTDIV4_MASK) >> 16)+ 1);
 	                 
 	                
-	            if (TERM_PORT_NUM == 0)
-	            {
+	      //      if (TERM_PORT_NUM == 0)
+	      //      {
 	          	  /* Enable the pins for the selected UART */
 
 	                  /* Enable the UART_TXD function on PTA1 */
@@ -232,7 +236,8 @@ void clock_init(void)
 	              PORTA_PCR2 = PORT_PCR_MUX(0x2);
 	                
 	              SIM_SOPT2 |= SIM_SOPT2_UART0SRC(1); // select the PLLFLLCLK as UART0 clock source
-	            }
+	       //     }
+#if 0
 	          	if (TERM_PORT_NUM == 1)
 	          	{
 	                        /* Enable the UART_TXD function on PTC4 */
@@ -250,7 +255,7 @@ void clock_init(void)
 	          		/* Enable the UART_RXD function on PTD2 */
 	          		PORTD_PCR2 = PORT_PCR_MUX(0x3); // UART2 is alt3 function for this pin
 	          	}
-	                	          
+#endif	                	          
 }
 
 /*********************************************************************************************/
