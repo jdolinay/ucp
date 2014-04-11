@@ -8,6 +8,7 @@
 C_SRCS_QUOTED += \
 "../Sources/main.c" \
 "../Sources/sa_mtb.c" \
+"$(KINETIS)/smt160_kl25.c" \
 "$(KINETIS)/uart.c" \
 "../Sources/ucp_app.c" \
 "../Sources/ucp_hal.c" \
@@ -15,6 +16,7 @@ C_SRCS_QUOTED += \
 C_SRCS += \
 ../Sources/main.c \
 ../Sources/sa_mtb.c \
+$(KINETIS)/smt160_kl25.c \
 $(KINETIS)/uart.c \
 ../Sources/ucp_app.c \
 ../Sources/ucp_hal.c \
@@ -22,6 +24,7 @@ $(KINETIS)/uart.c \
 OBJS += \
 ./Sources/main.o \
 ./Sources/sa_mtb.o \
+./Sources/smt160_kl25.o \
 ./Sources/uart.o \
 ./Sources/ucp_app.o \
 ./Sources/ucp_hal.o \
@@ -29,6 +32,7 @@ OBJS += \
 C_DEPS += \
 ./Sources/main.d \
 ./Sources/sa_mtb.d \
+./Sources/smt160_kl25.d \
 ./Sources/uart.d \
 ./Sources/ucp_app.d \
 ./Sources/ucp_hal.d \
@@ -36,6 +40,7 @@ C_DEPS += \
 OBJS_QUOTED += \
 "./Sources/main.o" \
 "./Sources/sa_mtb.o" \
+"./Sources/smt160_kl25.o" \
 "./Sources/uart.o" \
 "./Sources/ucp_app.o" \
 "./Sources/ucp_hal.o" \
@@ -43,6 +48,7 @@ OBJS_QUOTED += \
 C_DEPS_QUOTED += \
 "./Sources/main.d" \
 "./Sources/sa_mtb.d" \
+"./Sources/smt160_kl25.d" \
 "./Sources/uart.d" \
 "./Sources/ucp_app.d" \
 "./Sources/ucp_hal.d" \
@@ -50,6 +56,7 @@ C_DEPS_QUOTED += \
 OBJS_OS_FORMAT += \
 ./Sources/main.o \
 ./Sources/sa_mtb.o \
+./Sources/smt160_kl25.o \
 ./Sources/uart.o \
 ./Sources/ucp_app.o \
 ./Sources/ucp_hal.o \
@@ -72,9 +79,17 @@ Sources/sa_mtb.o: ../Sources/sa_mtb.c
 	@echo 'Finished building: $<'
 	@echo ' '
 
-Sources/uart.o: $(KINETIS)/uart.c
+Sources/smt160_kl25.o: $(KINETIS)/smt160_kl25.c
 	@echo 'Building file: $<'
 	@echo 'Executing target #3 $<'
+	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
+	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/smt160_kl25.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/smt160_kl25.o"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+Sources/uart.o: $(KINETIS)/uart.c
+	@echo 'Building file: $<'
+	@echo 'Executing target #4 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/uart.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/uart.o"
 	@echo 'Finished building: $<'
@@ -82,7 +97,7 @@ Sources/uart.o: $(KINETIS)/uart.c
 
 Sources/ucp_app.o: ../Sources/ucp_app.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #4 $<'
+	@echo 'Executing target #5 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/ucp_app.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/ucp_app.o"
 	@echo 'Finished building: $<'
@@ -90,7 +105,7 @@ Sources/ucp_app.o: ../Sources/ucp_app.c
 
 Sources/ucp_hal.o: ../Sources/ucp_hal.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #5 $<'
+	@echo 'Executing target #6 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/ucp_hal.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/ucp_hal.o"
 	@echo 'Finished building: $<'

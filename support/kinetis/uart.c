@@ -19,8 +19,6 @@
 //#include "common.h"
 #include "derivative.h"	// jd
 #include "uart.h"
-#include <stdarg.h>
-
 
 #define LF 0x0A						// Line Feed ASCII code
 #define CR 0x0D						// Carriage Return ASCII code

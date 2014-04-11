@@ -43,6 +43,9 @@ float ucphal_read_input(uint8_t channel)
 {
     /* TODO: add code to read input for given control-channel */
     
+	// Cteni teploty primo merenim pomeru 0 a 1 na pinu?
+	// na GB60 je teplota na pinu MCU header 24 a 26 (pro 2 kanaly casovace)
+	
     
     /* Priklad pro cteni teploty pomoci ovladace pro model tepelne soustavy 
     float tmp;

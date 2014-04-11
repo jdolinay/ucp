@@ -5,7 +5,12 @@ Pro HCS08 a pak i pro kinetis.
 
 *****************************************************
 11.4.2014
-- uart moji verze je ok, muze se pradat do MSF.
+Pokracuj: cteni teploty (timer TMP1) - problem jak povolit preruseni, podle me je
+to preruseni void FTM1_IRQHandler viz startup code.
+NOTE: TMP je v manualu, v popisu Freedom pinu je "FTM". 
+Interupt cisla v manualu viz str 53.
+Povolovani asi v NVIC IPR registru 4. - nastavuje se tam priorita?
+- uart moji verze je ok, muze se predat do MSF.
 
 9.4.2014
 - funguje uart_init moji verze s enum baud rate; mam pro default preq = 20,9 MHz i pro 

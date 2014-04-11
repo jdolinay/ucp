@@ -4,6 +4,7 @@
 "./Sources/ucp_hal.o"
 "./Sources/ucp_app.o"
 "./Sources/uart.o"
+"./Sources/smt160_kl25.o"
 "./Sources/sa_mtb.o"
 "./Sources/main.o"
 -mcpu=cortex-m0
