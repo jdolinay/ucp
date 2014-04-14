@@ -94,7 +94,7 @@ void uart_putchar(char c)
     else 
     {
 		uart_write(c);					
-	}
+    }
 }
 
 /** Send null-terminated string to SCI. 

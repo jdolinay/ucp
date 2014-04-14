@@ -4,6 +4,9 @@ Projekt regulatoru
 Pro HCS08 a pak i pro kinetis.
 
 *****************************************************
+14.4.2014
+- 2-polohovy regulator (on-off)
+
 11.4.2014
 Pokracuj: cteni teploty (timer TMP1) - problem jak povolit preruseni, podle me je
 to preruseni void FTM1_IRQHandler viz startup code.
