@@ -5,6 +5,9 @@ Pro HCS08 a pak i pro kinetis.
 
 *****************************************************
 17.4.2014
+TODO: (info) pokud v projektu cw 10.x nefunguje sprinf nutno v settings > libraria zmenit
+nastaveni EWL printf na int nebo int_fp pokud chci pouzivat i na float.
+
 Funguje mereni teploty pres SMT160-30. verze dle 4 nize. 
 Zkousene verze:       (mozno ziskat v git z historie)
 1) 2 kanaly pro input capture jako puvodni verze na HCS08 - nedodelano, zmeneno
@@ -49,7 +52,7 @@ sdynamickych vypoctu...
 
 7.4.2014
 - Hotov BUILD OK PRO CW10.5 KINETIS A upraveny templates + projekt pro gb60 build ok.
-TODO: mam v cw10 projektu narychlo nahazeny kod uart + init pll, funguje ok, prenest do support jako driver, pak
+_TODO: mam v cw10 projektu narychlo nahazeny kod uart + init pll, funguje ok, prenest do support jako driver, pak
  ve formatu podle MSF. 
 Pozn: uart driver je univerzal ale pro uart0 pouzivany na frdm pro virtual sci je stejne zvlast funkce uart0_
 > pouzit jen tuto pro MSF driver. + mozna vyradit online vypocet baudrate s loop pri chybe > 3 % a udelat 

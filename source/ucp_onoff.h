@@ -11,8 +11,8 @@
     #define  UCP_ONOFF_H
 
 /* Vlastni definice datovych typu, jako podle C99 */
-#include "ucp_stdint.h"
-#include "ucp_stdbool.h"
+#include "kinetis\ucp_stdint.h"	/* standard types included in EWL */
+#include "kinetis\ucp_stdbool.h"	/* our own bool type */
 
 /** Chybove kody pro UCP
 */
