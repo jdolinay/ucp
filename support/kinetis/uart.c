@@ -198,6 +198,15 @@
      uart_puts(buffer);    
  } 
  
+ void uart_printf_float(const char* str, const char* format, float data)
+ {
+     char buffer[12];
+     sprintf(buffer, format, data);
+     uart_puts(str);
+     uart_putchar(' ');
+     uart_puts(buffer);    
+ }
+ 
  
  /* puvodni kod z FRDM--KL25Z sample code package */
 #if 0 

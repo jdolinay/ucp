@@ -16,10 +16,10 @@ extern "C" {
 /* Our own bool definition
  For C99 compiler it is contained in stdbool.h*/
 //typedef enum { false, true } bool;
-#ifndef bool
-	enum ucp_bool_type { false, true };
-	typedef enum ucp_bool_type bool;
-#endif
+//#ifndef bool
+enum ucp_bool_type { false, true };
+typedef enum ucp_bool_type bool;
+//#endif
 
 /*typedef uint8_t bool;
 #define	true	1

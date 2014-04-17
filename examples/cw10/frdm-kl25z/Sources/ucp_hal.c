@@ -11,7 +11,7 @@
 #include "ucp_hal.h"
 #include "smt160_kl25.h"	/* Temperature sensor SMT160-30 */
 //#include "ucp_swpwm.h"      /*  volitelne; softwarova PWM */
-//#include "top_gb60.h"   /* ovladat modelu tepelne soustavy */
+#include "top_kl25.h"   /* ovladat modelu tepelne soustavy */
 
 /** Inicializace potrebna pro funkce zde implementovane.
 * 
@@ -23,7 +23,8 @@
 uint8_t ucphal_init(void)
 {
      /* TODO:  add your hardware initialization */
-	smt160_init();
+	//smt160_init();
+	InitTop();
     
     // Priklad s vyuzitim softwarove PWM poskytovane v knihovne UCP 
     // ucp_pwm_setduty(1, 0);    /* Vystup na kanale 1 nastavit na 0 */
@@ -45,16 +46,15 @@ float ucphal_read_input(uint8_t channel)
 {
     /* TODO: add code to read input for given control-channel */
     
-	// Cteni teploty primo merenim pomeru 0 a 1 na pinu?
-	// na GB60 je teplota na pinu MCU header 24 a 26 (pro 2 kanaly casovace)
+	// Na GB60 je teplota na pinu MCU header 24 a 26 (pro 2 kanaly casovace)
+	// Ka FRDM-KL25-Z vyuzivame PTA12 a PTA13
 	
     
-    /* Priklad pro cteni teploty pomoci ovladace pro model tepelne soustavy 
+    /* Priklad pro cteni teploty pomoci ovladace pro model tepelne soustavy */ 
     float tmp;
     int rawtemp;
     static float old_val = 0.0f;
-    
-    // TODO: napr. pro model tep soustavy zde nacteni pres jeji ovladac
+        
     if ( channel == 1 )
     {        
         // podporujeme jen 1 kanal; pokud je kanal jiny nez 1, vracime 0.
@@ -66,7 +66,7 @@ float ucphal_read_input(uint8_t channel)
         old_val = tmp;
         return tmp;
     }
-    */
+    
         
     return 0.0f;
 }
@@ -104,7 +104,7 @@ float ucphal_read_setpoint(uint8_t channel)
 {
     /* TODO:  implement */
     /* Napriklad zde muze byt ziskani hodnoty podle pozice potenciometru na kitu... */
-    return 0.0f;    
+    return 35.0f;    
 }
 
 /* --- Nepovinne funkce ----- */
@@ -118,11 +118,11 @@ float ucphal_read_setpoint(uint8_t channel)
 *   provede nastaveni pinu na 1 (=zapne akcni zasah) pro dany kanal. Prirazeni pinu regulacnim kanalum
 * zalezi na uzivateli, ktery tuto funkci implementuje.
 */
-void ucphal_write_pin(uint8_t channel, uint8_t value ) //bool value)
+void ucphal_write_pin(uint8_t channel, bool value)
 {
     /* TODO:  implement */
     /* Priklad pro model tepelne sosustavy s vyuzitim ovladace, tj. nemusime 
-    primo na piny, ale volame radeji funkce ovladace:
+    primo na piny, ale volame radeji funkce ovladace: */
     if ( channel == 1 )
     {  
          if (value)
@@ -130,7 +130,7 @@ void ucphal_write_pin(uint8_t channel, uint8_t value ) //bool value)
          else
             TopOff();
     }
-    */
+    
     
     // ostatni kanaly ignorujeme
 }

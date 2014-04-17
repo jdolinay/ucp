@@ -4,8 +4,23 @@ Projekt regulatoru
 Pro HCS08 a pak i pro kinetis.
 
 *****************************************************
+17.4.2014
+Funguje mereni teploty pres SMT160-30. verze dle 4 nize. 
+Zkousene verze:       (mozno ziskat v git z historie)
+1) 2 kanaly pro input capture jako puvodni verze na HCS08 - nedodelano, zmeneno
+na 2)
+2) input capture na 1 kanal s prepinanim detekce rising/falling v ISR. Zdalo se ze 
+funguje ale davalo spatne hodnoty (kolem 50% duty pri 20 C misto cca 40%). Nebylo
+zajisteno disable kanalu pred zmenou konfigurace coz podle manualu musi byt.
+Ani s pokusy o vypnuti nefungovalo. Principialne je spatne v ISR menit edge...
+3) jako 2 ale nastaveno trvale na rising i falling a zjisteni stavu GPIO pinu.
+Prepnuti funkce pinu na GPIo a prectnei. Fungovalo, ale prepinani asi generuje falesne
+interrupty, casy byly kratke a nesmyslne.
+4) 1 input capture kanal jako 3 ale vyuzit jiny pin trvale jako GPIo pro zjistovani,
+zda byl interrupt od falling nebo rising.
+
 14.4.2014
-Pokracuj: mereni teploty funguje ale dava duty 50%  = 38 °C :()
+_Pokracuj: mereni teploty funguje ale dava duty 50%  = 38 °C :()
 Zkusit:
 POZOR_ dle manualu pred zmenou kanal mode musi byt kanal disabled,!
 0) disable kanal pred zmenou mode! > provedeno az na todo..

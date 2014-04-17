@@ -15,7 +15,7 @@ extern "C" {
 #endif
 
 #include "ucp_stdint.h"
-//#include "ucp_stdbool.h"
+#include "ucp_stdbool.h"
 
 
 #include "stdio.h"

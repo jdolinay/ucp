@@ -15,7 +15,7 @@
 /* Vlastni definice datovych typu, jako podle C99 */
 //#include "ucp_stdint.h"
 #include "ucp_stdint.h"	/* standard types included in EWL */
-//#include "ucp_stdbool.h"	/* our own bool type */
+#include "ucp_stdbool.h"	/* our own bool type */
 //#include "stdbool.h"
 
 /** The interface used by the user application */
@@ -25,7 +25,7 @@ void ucphal_write_output(uint8_t channel, float value);
 float ucphal_read_setpoint(uint8_t channel);
 
 /* Volitelna funkce potrebna pri pouziti softwaroveho PWM z ucp_swpwm.c */
-void ucphal_write_pin(uint8_t channel, uint8_t value ); //bool value);
+void ucphal_write_pin(uint8_t channel, bool value);
 
 /* ------------- end of file ------------- */
 #endif         /* UCP_HAL_H */

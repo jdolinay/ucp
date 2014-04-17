@@ -3,10 +3,18 @@
  * @brief driver for temperature sensor SMT 160-30 for Freedom board FRDM-KL25Z
  * 
  * @note
- * For input we can use pins:
- * PTA12 (TMP1_CH0) - digital pin 3 on Arduino
- * ** not used - PTA13 (TMP1_CH1) - digital pin 8 on Arduino 
+ * For input we can use 2 pins:
+ * PTA12 (TMP1_CH0) - digital pin 3 on Arduino (input capture)
+ * PTA13  - digital pin 8 on Arduino; used as GPIO to find out if rising or falling
+ * 			edge generated the timer channel interrupt. 
+ *
+ * Principle:
+ * In theory we could use 1 pin (input capture channel) and switch detection between 
+ * rising and falling. But it is not good to do this in ISR, attempts failed :(
+ * Also, switching the same pin between timer channel and GPIO to detect the
+ * level on the pin in ISR did not work, seems to generate false interrupts.
  * 
+ * Times: 
  * Typical signal is 3 kHz (period is about 330 us) 
  * and the pulse is about 150 us for temperature 20 C
  * so there is about 50% duty. 
@@ -17,7 +25,6 @@
  * For e.g. 5 MHz CPU the tick would be 0.2 us and we get 750 for
  * pulse - still ok.
  *  
- * 
 */
 
 #include "derivative.h"	// jd
@@ -43,7 +50,13 @@
 #define		SMT160_MIN_PERIOD	(250)
 
 /* how many samples (periods) we sum before computing average */
-#define		SMT160_SUM_NUMBER	(20)
+#define		SMT160_SUM_NUMBER	(24)
+
+/** Pin used by this driver as GPIO to detect if falling or rising edge
+ * Note that we assume PTA13; Changing just the number in #define is 
+ * not enough,see its use in code.
+ * */
+#define	SMT160_INPUT_PIN_NO			(13)
 
 volatile uint16_t gsmt_start;	/* time of pulse start */
 volatile uint16_t gsmt_pulse;	/* averaged pulse length in ticks */
@@ -78,7 +91,8 @@ void smt160_init()
 	/* enable input pins for TPM1 channels 0 and 1 
 	  The timer channel is Alt 3 function of the pins */
 	PORTA_PCR12 = PORT_PCR_MUX(3);		/* PTA12 = channel 0 for TPM1 */
-	//PORTA_PCR13 = PORT_PCR_MUX(3);
+	PORTA_PCR13 = PORT_PCR_MUX(1);		/* using PTA13 as GPIO for deciding falling/rising */
+	GPIOA_PDDR &= ~(1 << SMT160_INPUT_PIN_NO);			/* set PTA13 to input mode */ 
 	
 	/* Enable clock for timer TMP1 */
 	SIM_SCGC6 |= SIM_SCGC6_TPM1_MASK;
@@ -110,8 +124,9 @@ void smt160_init()
 	// Input capture config
 	// Version with 1 pin used; wait for rising edge
 	TPM1_C0SC = 0;	/* clear any pending interrupt and set all values to default */
-	TPM1_C0SC |= TPM_CnSC_ELSA_MASK;	/* input capture on rising edge */
-	TPM1_C0SC |= TPM_CnSC_CHIE_MASK;	/* enable channel interrupt */
+	/* input capture on rising and falling edge + enable channel interrupt */
+	TPM1_C0SC |= TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK | TPM_CnSC_CHIE_MASK;	
+		
 	
 	// Enable the interrupt
 	// Note: sample code package provides function for this in arm_cm0.c; (enable_irq(interrupt);)
@@ -168,10 +183,13 @@ uint16_t smt160_get_temp()
 	 */
 	if ( pulse < period )
 	{		
-		duty = (pulse * 100) / period;
+		// works but resolution is small 
+		//duty = (pulse * 100) / period;				
+		//pulse = 10000 * duty / 47 - 6809;
 		
+		duty = (pulse * 1000) / period;		
 		/* using pulse to store temperature */
-		pulse = 10000 * duty / 47 - 6809;		
+		pulse = 10000 * duty / 470 - 6809;
 	}
 	else
 		pulse = 0;	/* invalid pulse or period */
@@ -186,17 +204,17 @@ uint16_t smt160_get_temp()
 void FTM1_IRQHandler()
 {
 	volatile uint16_t tmp;
-	volatile uint32_t status;
 	
 	// Channel interrupt?
 	if ( (TPM1_C0SC & TPM_CnSC_CHF_MASK) != 0 )
 	{		
     	// channel 0 interrupt occurred
 		TPM1_C0SC |= TPM_CnSC_CHF_MASK;		// clear the interrupt flag
-        		
+		       		
 		// is it rising or falling edge?
-		// ELSB == 0 means rising
-		if ( (TPM1_C1SC & TPM_CnSC_ELSB_MASK) == 0 )
+		// We check separate pin which is used as GPIO and connected to the
+		// SMT160 output as well.
+		if ( (GPIOA_PDIR & (1 << SMT160_INPUT_PIN_NO)) != 0 )
 		{
 			/* RISING edge detected */
 			
@@ -220,9 +238,9 @@ void FTM1_IRQHandler()
 					&& gsmt_tmp_pulse > SMT160_MIN_PERIOD && gsmt_tmp_pulse < SMT160_MAX_PERIOD )
 				{
 					// pokusne vyrazeno prumerovani...
-					gsmt_period = tmp;
-					gsmt_pulse = gsmt_tmp_pulse;
-					/*
+					//gsmt_period = tmp;
+					//gsmt_pulse = gsmt_tmp_pulse;
+					
 					gsmt_period_sum += tmp;
 					gsmt_pulses += gsmt_tmp_pulse;
 					gsmt_sumcnt++;
@@ -234,22 +252,14 @@ void FTM1_IRQHandler()
 						gsmt_period_sum = 0;
 						gsmt_pulses = 0;
 					}
-					*/
+					
 				}
 				
 				/* end of period means also start of a new period */
 				gsmt_start = TPM_CnV_VAL(TPM1_C0V);			
 			}
 			
-			/* switch to falling edge  > wait for end of pulse */
-			TPM1_C0SC = 0;   // disable channel
-			// wait for change to take effect
-			// ... is acknowledged in counter domain (?) viz pdf...			
-			status = TPM1_C0SC;
-			while(status)
-				status = (TPM1_C0SC & 0x3C);	
-			//TPM1_C1SC &= ~TPM_CnSC_ELSA_MASK;
-			TPM1_C0SC |= TPM_CnSC_ELSB_MASK | TPM_CnSC_CHIE_MASK;            
+			      
 		}
 		else
 		{
@@ -266,30 +276,16 @@ void FTM1_IRQHandler()
 				gsmt_tmp_pulse = tmp;
 				//gsmt_period = 0;	/* invalidate the period */				
 			}
-			
-			/* switch to rising edge  > wait for start of next pulse which is
-			  also end of this period */
-			TPM1_C0SC = 0;   // disable channel
-			status = TPM1_C0SC;
-			while(status)
-				status = (TPM1_C0SC & 0x3C);	
-			TPM1_C0SC |= TPM_CnSC_ELSA_MASK | TPM_CnSC_CHIE_MASK;
+						
 				
 		}
-		
+				
 	
-		//TPM1_C0SC |= TPM_CnSC_CHF_MASK;		// clear the interrupt flag
-		
 	}  // end of channel 0 interrupt
 	
-	/* Chanel 1 input capture interrupt
-	if ( (TPM1_C1SC & TPM_CnSC_CHF_MASK) != 0 )
-	{
-		TPM1_C1SC |= TPM_CnSC_CHF_MASK;		
-	}*/
 	
 	
-	/* test for TOF
+	/* test for TOF interrupt
 	if ( (TPM1_SC & TPM_SC_TOF_MASK) != 0 )
 	{
 		// TOF occurred

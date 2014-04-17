@@ -1,9 +1,11 @@
 "./Project_Settings/Startup_Code/kinetis_sysinit.o"
 "./Project_Settings/Startup_Code/__arm_start.o"
 "./Project_Settings/Startup_Code/__arm_end.o"
+"./Sources/ucp_onoff.o"
 "./Sources/ucp_hal.o"
 "./Sources/ucp_app.o"
 "./Sources/uart.o"
+"./Sources/top_kl25.o"
 "./Sources/smt160_kl25.o"
 "./Sources/sa_mtb.o"
 "./Sources/main.o"
@@ -21,9 +23,9 @@
 -n
 -specs=ewl_c.specs
 -Xlinker
---undefined=__pformatter_
+--undefined=__pformatterFP
 -Xlinker
---defsym=__pformatter=__pformatter_
+--defsym=__pformatter=__pformatterFP
 -Xlinker
 --undefined=__sformatter
 -Xlinker

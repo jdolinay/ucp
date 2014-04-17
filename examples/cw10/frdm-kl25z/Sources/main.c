@@ -14,7 +14,8 @@
 
 // cesta do \support je v include dirs. Pak jsou podslozky podle platformy.
 #include "kinetis\uart.h"
-#include "kinetis\smt160_kl25.h"
+//#include "kinetis\smt160_kl25.h"
+#include "kinetis\top_kl25.h"
 
 void delay(void);
 void clock_init(void);
@@ -85,6 +86,7 @@ uint32_t uart0_clk_hz;
 int main(void)
 {
 	int counter = 0;	
+	char zn, stop = 1;
 	
 	// jd: port clock musi byt enabled
 	/* Enable all of the port clocks. These have to be enabled to configure
@@ -111,17 +113,38 @@ int main(void)
 	sci_init();
 	
 	// krok 2
-	ucp_app_init();		
+	ucp_app_init();	
+	
+	sci_puts("Press s to start control\n");
 	
 	for(;;) {	   
 	   	//counter++;
 	   	//if ( counter == 0 )
-	   	//	ucp_app_on_sample();	// krok 3  (TODO: casovani)
-	   	sci_puts("ahoja\n ");
-	   	
+		if (!stop )
+			ucp_app_on_sample();	// krok 3  (TODO: casovani)
+	   		   	
+	   	/*
 	   	// test mereni teploty 
-	   	counter = smt160_get_temp();
-	   	uart_printf16("Temp = ", "%d\n", counter / 100);
+	   	//	counter = smt160_get_temp();
+	   	counter = GetTemp();
+	   	uart_printf16("Temp = ", "%d", counter / 100);
+	   	uart_printf16(".", "%d\n", counter % 100);
+	   	*/
+	   	
+	   	/* Rucni ovladani topeni */	   	
+	   	if ( uart_data_available() )
+	   	{
+	   		zn = uart_getc();
+	   		if ( zn == '1' )
+	   			TopOn();
+	   		else if ( zn == '0' )
+	   			TopOff();
+	   		else if ( zn == 's' )
+	   			stop = !stop;	
+	   		else
+	   			sci_puts("Neznamy prikaz\n");
+	   	}
+	
 	   	
 	   	delay();
 	   	delay();
