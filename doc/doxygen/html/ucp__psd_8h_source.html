@@ -92,7 +92,7 @@ $(document).ready(function(){initNavTree('ucp__psd_8h_source.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -106,55 +106,53 @@ $(document).ready(function(){initNavTree('ucp__psd_8h_source.html','');});
 <div class="title">ucp_psd.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">* @file  ucp_psd.h</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">* @brief PSD controller (discrete PID controller)</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">*</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">*/</span></div>
+<a href="ucp__psd_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef  UCP_PSD_H</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #define  UCP_PSD_H</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">/* Vlastni definice datovych typu, jako podle C99 */</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;stdint.h&quot;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#define     UCP_ERROR_OK        (0)</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define     UCP_ERROR             (1)</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="structpsd__controller__data.html">   19</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structpsd__controller__data.html">psd_controller_data</a></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordtype">float</span> q0;        </div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="structpsd__controller__data.html#a209c65446ca302d32cbb908c4d75f616">   22</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="structpsd__controller__data.html#a209c65446ca302d32cbb908c4d75f616">q1</a>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordtype">float</span> q2;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordtype">float</span> q3;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordtype">float</span> uk1;      </div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="structpsd__controller__data.html#a06f18ad778f41bbc320a14d1f5f9381b">   27</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="structpsd__controller__data.html#a06f18ad778f41bbc320a14d1f5f9381b">ek1</a>;      </div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="structpsd__controller__data.html#a52e322d38f95fdd8635ca0e64bb15c58">   28</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="structpsd__controller__data.html#a52e322d38f95fdd8635ca0e64bb15c58">ek2</a>;  </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordtype">float</span> ek3;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;};</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structpsd__controller__data.html">psd_controller_data</a>  <a class="code" href="structpsd__controller__data.html">UCP_PSD_REG</a>;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;uint8_t ucp_psd_init(<a class="code" href="structpsd__controller__data.html">UCP_PSD_REG</a>* pReg, <span class="keywordtype">float</span> q0, <span class="keywordtype">float</span> <a class="code" href="structpsd__controller__data.html#a209c65446ca302d32cbb908c4d75f616">q1</a>, <span class="keywordtype">float</span> q2, <span class="keywordtype">float</span> q3);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keywordtype">float</span> ucp_psd_step(<a class="code" href="structpsd__controller__data.html">UCP_PSD_REG</a>* pReg, <span class="keywordtype">float</span> y, <span class="keywordtype">float</span> setpoint,  <span class="keywordtype">float</span> minVal, <span class="keywordtype">float</span> maxVal);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;ucp_stdint.h&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;ucp_stdbool.h&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="ucp__psd_8h.html#afd270c9f3a1ff40509e6dfa671e0266e">   15</a></span>&#160;<span class="preprocessor">#define     UCP_ERROR_OK        (0)</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define     UCP_ERROR             (1)</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="structpsd__controller__data.html">   20</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structpsd__controller__data.html">psd_controller_data</a></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordtype">float</span> q0;        </div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="structpsd__controller__data.html#a209c65446ca302d32cbb908c4d75f616">   23</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="structpsd__controller__data.html#a209c65446ca302d32cbb908c4d75f616">q1</a>;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordtype">float</span> q2;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordtype">float</span> q3;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">float</span> uk1;      </div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="structpsd__controller__data.html#a06f18ad778f41bbc320a14d1f5f9381b">   28</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="structpsd__controller__data.html#a06f18ad778f41bbc320a14d1f5f9381b">ek1</a>;      </div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="structpsd__controller__data.html#a52e322d38f95fdd8635ca0e64bb15c58">   29</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="structpsd__controller__data.html#a52e322d38f95fdd8635ca0e64bb15c58">ek2</a>;  </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordtype">float</span> ek3;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;};</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="ucp__psd_8h.html#a04d79f32864cca717d7b57a34ff485c6">   35</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structpsd__controller__data.html">psd_controller_data</a>  <a class="code" href="structpsd__controller__data.html">UCP_PSD_REG</a>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;uint8_t <a class="code" href="ucp__psd_8h.html#a392f11259b84584e3cc0888e724ec9ff">ucp_psd_init</a>(<a class="code" href="structpsd__controller__data.html">UCP_PSD_REG</a>* pReg, <span class="keywordtype">float</span> q0, <span class="keywordtype">float</span> <a class="code" href="structpsd__controller__data.html#a209c65446ca302d32cbb908c4d75f616">q1</a>, <span class="keywordtype">float</span> q2, <span class="keywordtype">float</span> q3);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keywordtype">float</span> <a class="code" href="ucp__psd_8h.html#a37a74d7e7828147310d8dffc73430a7d">ucp_psd_step</a>(<a class="code" href="structpsd__controller__data.html">UCP_PSD_REG</a>* pReg, <span class="keywordtype">float</span> y, <span class="keywordtype">float</span> setpoint,  <span class="keywordtype">float</span> minVal, <span class="keywordtype">float</span> maxVal);</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">/* ------------- end of file ------------- */</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="structpsd__controller__data_html_a209c65446ca302d32cbb908c4d75f616"><div class="ttname"><a href="structpsd__controller__data.html#a209c65446ca302d32cbb908c4d75f616">psd_controller_data::q1</a></div><div class="ttdeci">float q1</div><div class="ttdef"><b>Definition:</b> ucp_psd.h:22</div></div>
-<div class="ttc" id="structpsd__controller__data_html_a52e322d38f95fdd8635ca0e64bb15c58"><div class="ttname"><a href="structpsd__controller__data.html#a52e322d38f95fdd8635ca0e64bb15c58">psd_controller_data::ek2</a></div><div class="ttdeci">float ek2</div><div class="ttdef"><b>Definition:</b> ucp_psd.h:28</div></div>
-<div class="ttc" id="structpsd__controller__data_html_a06f18ad778f41bbc320a14d1f5f9381b"><div class="ttname"><a href="structpsd__controller__data.html#a06f18ad778f41bbc320a14d1f5f9381b">psd_controller_data::ek1</a></div><div class="ttdeci">float ek1</div><div class="ttdef"><b>Definition:</b> ucp_psd.h:27</div></div>
-<div class="ttc" id="structpsd__controller__data_html"><div class="ttname"><a href="structpsd__controller__data.html">psd_controller_data</a></div><div class="ttdef"><b>Definition:</b> ucp_psd.h:19</div></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">/* ------------- end of file ------------- */</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="structpsd__controller__data_html_a209c65446ca302d32cbb908c4d75f616"><div class="ttname"><a href="structpsd__controller__data.html#a209c65446ca302d32cbb908c4d75f616">psd_controller_data::q1</a></div><div class="ttdeci">float q1</div><div class="ttdef"><b>Definition:</b> ucp_psd.h:23</div></div>
+<div class="ttc" id="ucp__psd_8h_html_a37a74d7e7828147310d8dffc73430a7d"><div class="ttname"><a href="ucp__psd_8h.html#a37a74d7e7828147310d8dffc73430a7d">ucp_psd_step</a></div><div class="ttdeci">float ucp_psd_step(UCP_PSD_REG *pReg, float y, float setpoint, float minVal, float maxVal)</div><div class="ttdef"><b>Definition:</b> ucp_psd.c:39</div></div>
+<div class="ttc" id="structpsd__controller__data_html_a52e322d38f95fdd8635ca0e64bb15c58"><div class="ttname"><a href="structpsd__controller__data.html#a52e322d38f95fdd8635ca0e64bb15c58">psd_controller_data::ek2</a></div><div class="ttdeci">float ek2</div><div class="ttdef"><b>Definition:</b> ucp_psd.h:29</div></div>
+<div class="ttc" id="structpsd__controller__data_html_a06f18ad778f41bbc320a14d1f5f9381b"><div class="ttname"><a href="structpsd__controller__data.html#a06f18ad778f41bbc320a14d1f5f9381b">psd_controller_data::ek1</a></div><div class="ttdeci">float ek1</div><div class="ttdef"><b>Definition:</b> ucp_psd.h:28</div></div>
+<div class="ttc" id="ucp__psd_8h_html_a392f11259b84584e3cc0888e724ec9ff"><div class="ttname"><a href="ucp__psd_8h.html#a392f11259b84584e3cc0888e724ec9ff">ucp_psd_init</a></div><div class="ttdeci">uint8_t ucp_psd_init(UCP_PSD_REG *pReg, float q0, float q1, float q2, float q3)</div><div class="ttdef"><b>Definition:</b> ucp_psd.c:15</div></div>
+<div class="ttc" id="structpsd__controller__data_html"><div class="ttname"><a href="structpsd__controller__data.html">psd_controller_data</a></div><div class="ttdef"><b>Definition:</b> ucp_psd.h:20</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_b2f33c71d4aa5e7af42a1ca61ff5af1b.html">source</a></li><li class="navelem"><b>ucp_psd.h</b></li>
-    <li class="footer">Generated on Tue Apr 1 2014 15:38:43 for UCP - UTB control package by
+    <li class="navelem"><a class="el" href="dir_b2f33c71d4aa5e7af42a1ca61ff5af1b.html">source</a></li><li class="navelem"><a class="el" href="ucp__psd_8h.html">ucp_psd.h</a></li>
+    <li class="footer">Generated on Thu Apr 17 2014 14:53:33 for UCP - UTB control package by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
   </ul>

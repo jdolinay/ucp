@@ -1,4 +1,4 @@
-/*
+/**
 * @file  ucp_psd.c
 * @brief PSD controller (discrete PID controller)
 *

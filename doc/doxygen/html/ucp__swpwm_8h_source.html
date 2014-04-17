@@ -92,7 +92,7 @@ $(document).ready(function(){initNavTree('ucp__swpwm_8h_source.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -120,13 +120,14 @@ $(document).ready(function(){initNavTree('ucp__swpwm_8h_source.html','');});
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #define  UCP_SWPWM_H</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">/* Vlastni definice datovych typu, jako podle C99 */</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;stdint.h&quot;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ucp__swpwm_8c.html#a88d3dbf10b758938d138902f9271d562">ucp_pwm_tick</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ucp__swpwm_8c.html#ac8291f425d4d0564e8b375e175418ec3">ucp_pwm_setduty</a>(uint8_t channel, uint8_t duty);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">/* ------------- end of file ------------- */</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#endif         </span><span class="comment">/* UCP_SWPWM_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;ucp_stdint.h&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;ucp_stdbool.h&quot;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ucp__swpwm_8c.html#a88d3dbf10b758938d138902f9271d562">ucp_pwm_tick</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ucp__swpwm_8c.html#ac8291f425d4d0564e8b375e175418ec3">ucp_pwm_setduty</a>(uint8_t channel, uint8_t duty);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">/* ------------- end of file ------------- */</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#endif         </span><span class="comment">/* UCP_SWPWM_H */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="ucp__swpwm_8c_html_ac8291f425d4d0564e8b375e175418ec3"><div class="ttname"><a href="ucp__swpwm_8c.html#ac8291f425d4d0564e8b375e175418ec3">ucp_pwm_setduty</a></div><div class="ttdeci">void ucp_pwm_setduty(uint8_t channel, uint8_t duty)</div><div class="ttdef"><b>Definition:</b> ucp_swpwm.c:60</div></div>
 <div class="ttc" id="ucp__swpwm_8c_html_a88d3dbf10b758938d138902f9271d562"><div class="ttname"><a href="ucp__swpwm_8c.html#a88d3dbf10b758938d138902f9271d562">ucp_pwm_tick</a></div><div class="ttdeci">void ucp_pwm_tick(void)</div><div class="ttdef"><b>Definition:</b> ucp_swpwm.c:25</div></div>
 </div><!-- fragment --></div><!-- contents -->
@@ -135,7 +136,7 @@ $(document).ready(function(){initNavTree('ucp__swpwm_8h_source.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b2f33c71d4aa5e7af42a1ca61ff5af1b.html">source</a></li><li class="navelem"><b>ucp_swpwm.h</b></li>
-    <li class="footer">Generated on Tue Apr 1 2014 15:38:43 for UCP - UTB control package by
+    <li class="footer">Generated on Thu Apr 17 2014 14:53:33 for UCP - UTB control package by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
   </ul>

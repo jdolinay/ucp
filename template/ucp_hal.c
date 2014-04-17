@@ -1,4 +1,5 @@
-/** @file ucp_hal.c 
+/** 
+* @file ucp_hal.c 
 * @brief Hardware Abstraction Layer - MCU-specific code provided by the user.
 *
 * @note Toto jsou funkce, ktere vyuziva UCP aplikace. Tyto funkce

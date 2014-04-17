@@ -1,4 +1,4 @@
-/*
+/**
 * @file  ucp_app.h
 *
 * @brief Main application

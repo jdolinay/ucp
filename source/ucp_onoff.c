@@ -1,4 +1,4 @@
-/*
+/**
 * @file  ucp_onoff.c
 * @brief on-off controller (bang-bang controller)
 *

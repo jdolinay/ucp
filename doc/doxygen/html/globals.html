@@ -77,6 +77,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li class="current"><a href="globals.html"><span>All</span></a></li>
       <li><a href="globals_func.html"><span>Functions</span></a></li>
       <li><a href="globals_vars.html"><span>Variables</span></a></li>
+      <li><a href="globals_type.html"><span>Typedefs</span></a></li>
+      <li><a href="globals_defs.html"><span>Macros</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow4" class="tabs3">
+    <ul class="tablist">
+      <li><a href="#index_g"><span>g</span></a></li>
+      <li class="current"><a href="#index_u"><span>u</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -99,7 +107,7 @@ $(document).ready(function(){initNavTree('globals.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -109,12 +117,57 @@ $(document).ready(function(){initNavTree('globals.html','');});
 </div>
 
 <div class="contents">
-<div class="textblock">Here is a list of all documented functions, variables, defines, enums, and typedefs with links to the documentation:</div><ul>
+<div class="textblock">Here is a list of all documented functions, variables, defines, enums, and typedefs with links to the documentation:</div>
+
+<h3><a class="anchor" id="index_g"></a>- g -</h3><ul>
 <li>g_ucp_counter
 : <a class="el" href="ucp__swpwm_8c.html#ac3b091c85e25e939439910cfccbd693b">ucp_swpwm.c</a>
 </li>
 <li>g_ucp_duty2
 : <a class="el" href="ucp__swpwm_8c.html#a615f59071a642d510e547f81e8da1e2b">ucp_swpwm.c</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_u"></a>- u -</h3><ul>
+<li>ucp_app_init()
+: <a class="el" href="ucp__app_8c.html#aaa17feda0c3358a6c5e852cdba42e508">ucp_app.c</a>
+, <a class="el" href="ucp__app_8h.html#aaa17feda0c3358a6c5e852cdba42e508">ucp_app.h</a>
+</li>
+<li>ucp_app_on_sample()
+: <a class="el" href="ucp__app_8c.html#a550b6315cd90939a6812854a96bcb8c7">ucp_app.c</a>
+, <a class="el" href="ucp__app_8h.html#a550b6315cd90939a6812854a96bcb8c7">ucp_app.h</a>
+</li>
+<li>UCP_ERROR_OK
+: <a class="el" href="ucp__onoff_8h.html#afd270c9f3a1ff40509e6dfa671e0266e">ucp_onoff.h</a>
+, <a class="el" href="ucp__psd_8h.html#afd270c9f3a1ff40509e6dfa671e0266e">ucp_psd.h</a>
+</li>
+<li>ucp_onoff_init()
+: <a class="el" href="ucp__onoff_8c.html#a82cbf8b422b6ead997e95fc000042482">ucp_onoff.c</a>
+, <a class="el" href="ucp__onoff_8h.html#a82cbf8b422b6ead997e95fc000042482">ucp_onoff.h</a>
+</li>
+<li>ucp_onoff_step()
+: <a class="el" href="ucp__onoff_8c.html#af77c9aa1f50270d1af85fb8890f948e3">ucp_onoff.c</a>
+, <a class="el" href="ucp__onoff_8h.html#af77c9aa1f50270d1af85fb8890f948e3">ucp_onoff.h</a>
+</li>
+<li>ucp_plant_init()
+: <a class="el" href="ucp__plant_8c.html#a729e330621f3361d7f2ff03f41321a25">ucp_plant.c</a>
+, <a class="el" href="ucp__plant_8h.html#ab41e10d7e51fc27f9f23f1c5a59ec027">ucp_plant.h</a>
+</li>
+<li>ucp_plant_step()
+: <a class="el" href="ucp__plant_8c.html#a2b70c8fc551ef1ed465d0db834b70794">ucp_plant.c</a>
+, <a class="el" href="ucp__plant_8h.html#aba47ec6b43cd22c87d7ee46da4d28078">ucp_plant.h</a>
+</li>
+<li>ucp_psd_init()
+: <a class="el" href="ucp__psd_8c.html#a392f11259b84584e3cc0888e724ec9ff">ucp_psd.c</a>
+, <a class="el" href="ucp__psd_8h.html#a392f11259b84584e3cc0888e724ec9ff">ucp_psd.h</a>
+</li>
+<li>UCP_PSD_REG
+: <a class="el" href="ucp__psd_8h.html#a04d79f32864cca717d7b57a34ff485c6">ucp_psd.h</a>
+</li>
+<li>ucp_psd_step()
+: <a class="el" href="ucp__psd_8c.html#a37a74d7e7828147310d8dffc73430a7d">ucp_psd.c</a>
+, <a class="el" href="ucp__psd_8h.html#a37a74d7e7828147310d8dffc73430a7d">ucp_psd.h</a>
 </li>
 <li>ucp_pwm_setduty()
 : <a class="el" href="ucp__swpwm_8c.html#ac8291f425d4d0564e8b375e175418ec3">ucp_swpwm.c</a>
@@ -122,13 +175,33 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <li>ucp_pwm_tick()
 : <a class="el" href="ucp__swpwm_8c.html#a88d3dbf10b758938d138902f9271d562">ucp_swpwm.c</a>
 </li>
+<li>ucphal_init()
+: <a class="el" href="ucp__hal_8c.html#a2e5ad025994aa7607eb5a77639aa30ee">ucp_hal.c</a>
+, <a class="el" href="ucp__hal_8h.html#a2e5ad025994aa7607eb5a77639aa30ee">ucp_hal.h</a>
+</li>
+<li>ucphal_read_input()
+: <a class="el" href="ucp__hal_8c.html#aa83fa152e77d66bc321518c3433e8a2b">ucp_hal.c</a>
+, <a class="el" href="ucp__hal_8h.html#aa83fa152e77d66bc321518c3433e8a2b">ucp_hal.h</a>
+</li>
+<li>ucphal_read_setpoint()
+: <a class="el" href="ucp__hal_8c.html#a8eb2f32426d5e1d10fa0ac1f0eb86bc7">ucp_hal.c</a>
+, <a class="el" href="ucp__hal_8h.html#a8eb2f32426d5e1d10fa0ac1f0eb86bc7">ucp_hal.h</a>
+</li>
+<li>ucphal_write_output()
+: <a class="el" href="ucp__hal_8c.html#a2f7ce580971d6e24c08b7aafdc9b2c74">ucp_hal.c</a>
+, <a class="el" href="ucp__hal_8h.html#a2f7ce580971d6e24c08b7aafdc9b2c74">ucp_hal.h</a>
+</li>
+<li>ucphal_write_pin()
+: <a class="el" href="ucp__hal_8c.html#ac64fd8eb9277552831eecd36da4d291d">ucp_hal.c</a>
+, <a class="el" href="ucp__hal_8h.html#ac64fd8eb9277552831eecd36da4d291d">ucp_hal.h</a>
+</li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Apr 1 2014 15:38:43 for UCP - UTB control package by
+    <li class="footer">Generated on Thu Apr 17 2014 14:53:33 for UCP - UTB control package by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
   </ul>

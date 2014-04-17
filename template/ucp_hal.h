@@ -1,4 +1,4 @@
-/*
+/**
 * @file  ucp_hal.h
 *
 * @brief MCU-specific code provided by the user.

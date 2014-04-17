@@ -1,4 +1,4 @@
-/*
+/**
  * @File        uart.c
  * @brief     Provide common uart routines for Kinetis MCU; for UART0 only!
  *

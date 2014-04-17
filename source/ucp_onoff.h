@@ -1,4 +1,4 @@
-/*
+/**
 * @file  ucp_onoff.h
 * @brief On-off controller (bang-bang controller with hysteresis)
 *

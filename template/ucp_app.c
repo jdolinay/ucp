@@ -1,6 +1,7 @@
 /**
 * @file  ucp_app.c
-* App template
+* @brief Application template
+* @note
 * Sablona ridici aplikace pro knihovnu UCP
 *
 * Tento soubor pridejte do projektu a implementujte zde celou funcnost aplikace.

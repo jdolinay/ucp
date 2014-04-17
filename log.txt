@@ -5,7 +5,20 @@ Pro HCS08 a pak i pro kinetis.
 
 *****************************************************
 17.4.2014
-TODO: (info) pokud v projektu cw 10.x nefunguje sprinf nutno v settings > libraria zmenit
+Projekt v podstatì prozatím možno uzavøít. 
+Stav:
+Fungující ukázkové apliakace s PSD a 2-polohovým regulátorem pro GB60
+Modul pro simulaci rizene soustavy 2-radu
+Fungující ukázková aplikace s 2-polohovým regulátorem pro kinetis (frdm-kl25z)
+Fungujici driver pro uart pro obe platformy.
+Fungujici driver pro snimac teploty smt160-30 pro kinetis (pro gb60 je stary 
+z diplomky, funguje ale neni nic moc :))
+Fungujici softwarovy pwm (overeno pro gb60)
+Slusna ceska dokumentace v upc.doc
+Doxygen dokumentace ze zdrojaku nedokoncena :)
+Poznamka: vsechny ukazky overovany s modelem tepelne soustavy (BP Babik 2006).
+
+_REMEM pokud v projektu cw 10.x nefunguje sprinf nutno v settings > libraria zmenit
 nastaveni EWL printf na int nebo int_fp pokud chci pouzivat i na float.
 
 Funguje mereni teploty pres SMT160-30. verze dle 4 nize. 

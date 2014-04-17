@@ -1,4 +1,4 @@
-/*
+/**
 * @file  ucp_plant.c
 * @brief Controlled plant for simulations
 * 

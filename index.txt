@@ -2,7 +2,7 @@
 
 UTB Control Package (UCP)
 Projekt regulatoru 
-Pro HCS08 a pak i pro kinetis.
+Pro HCS08 a pro Kinetis KL25Z
 
 
 Struktura souboru
@@ -13,6 +13,8 @@ examples	- ukazkove programy knihovny
 source		- zdrojove kody knihovny (napr. regulatory) vcetne hlavickovych souboru
 support		- podpurny kod, napr. uart driver apod.
 template 	- "sablony" zdrojovych kodu, ktere uzivatel prida do sve aplikace
+
+Podrobnejsi informace viz doc\ucp.doc
 
 
 

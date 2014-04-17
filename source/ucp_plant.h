@@ -1,4 +1,4 @@
-/*
+/**
 * @file  ucp_plant.h
 * @brief Simulate controlled plant
 *

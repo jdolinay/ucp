@@ -1,4 +1,4 @@
-/*
+/**
 * @file  ucp_psd.h
 * @brief PSD controller (discrete PID controller)
 *
@@ -31,9 +31,10 @@ struct psd_controller_data
             
 };
 
+/** PSD controller data type*/
 typedef struct psd_controller_data  UCP_PSD_REG;
 
-
+/** PSD controller API */
 uint8_t ucp_psd_init(UCP_PSD_REG* pReg, float q0, float q1, float q2, float q3);
 float ucp_psd_step(UCP_PSD_REG* pReg, float y, float setpoint,  float minVal, float maxVal);
 
