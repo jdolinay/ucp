@@ -6,11 +6,18 @@ Pro HCS08 a pak i pro kinetis.
 *****************************************************
 14.4.2014
 Pokracuj: mereni teploty funguje ale dava duty 50%  = 38 °C :()
+Zkusit:
+POZOR_ dle manualu pred zmenou kanal mode musi byt kanal disabled,!
+0) disable kanal pred zmenou mode! > provedeno az na todo..
+1) zakaz preruseni tpm pri zmene edge  > uz hotovo
+2) mazat flag az na konci isr  > asi neni treba kdyz 1) viz flag blokuje dalsi int...                    
+3) na osciloskopu merit pulsy
+4) proc puls je cca 6000 coz pri 150 us odpovida cpu clock 40 mhz pritom mam 20 mhz?
+
 - 2-polohovy regulator (on-off) funguje ok, mam i prubeh v xls.
-Pokracuj: kinetis viz nize
 
 11.4.2014
-Pokracuj: cteni teploty (timer TMP1) - problem jak povolit preruseni, podle me je
+_Pokracuj: cteni teploty (timer TMP1) - problem jak povolit preruseni, podle me je
 to preruseni void FTM1_IRQHandler viz startup code.
 NOTE: TMP je v manualu, v popisu Freedom pinu je "FTM". 
 Interupt cisla v manualu viz str 53.

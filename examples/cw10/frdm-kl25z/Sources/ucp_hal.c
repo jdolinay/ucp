@@ -118,7 +118,7 @@ float ucphal_read_setpoint(uint8_t channel)
 *   provede nastaveni pinu na 1 (=zapne akcni zasah) pro dany kanal. Prirazeni pinu regulacnim kanalum
 * zalezi na uzivateli, ktery tuto funkci implementuje.
 */
-void ucphal_write_pin(uint8_t channel, bool value)
+void ucphal_write_pin(uint8_t channel, uint8_t value ) //bool value)
 {
     /* TODO:  implement */
     /* Priklad pro model tepelne sosustavy s vyuzitim ovladace, tj. nemusime 

@@ -101,6 +101,9 @@
 							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.printsize.debug.965622586" name="ARM Ltd Windows GNU Print Size" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.printsize.debug"/>
 						</toolChain>
 					</folderInfo>
+					<fileInfo id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.550580818.1343415571" name="smt160_kl25.c" rcbsApplicability="disable" resourcePath="Sources/smt160_kl25.c" toolsToInvoke="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.c.compiler.debug.666489253.1886333521">
+						<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.c.compiler.debug.666489253.1886333521" name="ARM Ltd Windows GCC C Compiler" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.c.compiler.debug.666489253"/>
+					</fileInfo>
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>

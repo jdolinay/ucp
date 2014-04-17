@@ -186,15 +186,16 @@ uint16_t smt160_get_temp()
 void FTM1_IRQHandler()
 {
 	volatile uint16_t tmp;
+	volatile uint32_t status;
 	
 	// Channel interrupt?
 	if ( (TPM1_C0SC & TPM_CnSC_CHF_MASK) != 0 )
-	{
-		// channel 0 interrupt occurred
-		TPM1_C0SC |= TPM_CnSC_CHF_MASK;		// clear the flag
-		
+	{		
+    	// channel 0 interrupt occurred
+		TPM1_C0SC |= TPM_CnSC_CHF_MASK;		// clear the interrupt flag
+        		
 		// is it rising or falling edge?
-		// ELSB == 0 means falling
+		// ELSB == 0 means rising
 		if ( (TPM1_C1SC & TPM_CnSC_ELSB_MASK) == 0 )
 		{
 			/* RISING edge detected */
@@ -241,8 +242,14 @@ void FTM1_IRQHandler()
 			}
 			
 			/* switch to falling edge  > wait for end of pulse */
-			TPM1_C1SC &= ~TPM_CnSC_ELSA_MASK;
-			TPM1_C1SC |= TPM_CnSC_ELSB_MASK;	
+			TPM1_C0SC = 0;   // disable channel
+			// wait for change to take effect
+			// ... is acknowledged in counter domain (?) viz pdf...			
+			status = TPM1_C0SC;
+			while(status)
+				status = (TPM1_C0SC & 0x3C);	
+			//TPM1_C1SC &= ~TPM_CnSC_ELSA_MASK;
+			TPM1_C0SC |= TPM_CnSC_ELSB_MASK | TPM_CnSC_CHIE_MASK;            
 		}
 		else
 		{
@@ -262,11 +269,18 @@ void FTM1_IRQHandler()
 			
 			/* switch to rising edge  > wait for start of next pulse which is
 			  also end of this period */
-			TPM1_C1SC &= ~TPM_CnSC_ELSB_MASK;
-			TPM1_C1SC |= TPM_CnSC_ELSA_MASK;
+			TPM1_C0SC = 0;   // disable channel
+			status = TPM1_C0SC;
+			while(status)
+				status = (TPM1_C0SC & 0x3C);	
+			TPM1_C0SC |= TPM_CnSC_ELSA_MASK | TPM_CnSC_CHIE_MASK;
+				
 		}
 		
-	}
+	
+		//TPM1_C0SC |= TPM_CnSC_CHF_MASK;		// clear the interrupt flag
+		
+	}  // end of channel 0 interrupt
 	
 	/* Chanel 1 input capture interrupt
 	if ( (TPM1_C1SC & TPM_CnSC_CHF_MASK) != 0 )

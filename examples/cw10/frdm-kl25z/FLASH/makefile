@@ -43,13 +43,10 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-frdm-kl25z.elf \
 
 EXECUTABLES_QUOTED += \
-"frdm-kl25z.elf" \
 
 EXECUTABLES_OS_FORMAT += \
-frdm-kl25z.elf \
 
 
 # All Target

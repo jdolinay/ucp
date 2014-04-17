@@ -15,7 +15,7 @@
 /* Vlastni definice datovych typu, jako podle C99 */
 //#include "ucp_stdint.h"
 #include "ucp_stdint.h"	/* standard types included in EWL */
-#include "ucp_stdbool.h"	/* our own bool type */
+//#include "ucp_stdbool.h"	/* our own bool type */
 
 /** The interface used by the user application */
 void ucp_app_init(void);
