@@ -5,7 +5,9 @@ Pro HCS08 a pak i pro kinetis.
 
 *****************************************************
 14.4.2014
-- 2-polohovy regulator (on-off)
+Pokracuj: mereni teploty funguje ale dava duty 50%  = 38 °C :()
+- 2-polohovy regulator (on-off) funguje ok, mam i prubeh v xls.
+Pokracuj: kinetis viz nize
 
 11.4.2014
 Pokracuj: cteni teploty (timer TMP1) - problem jak povolit preruseni, podle me je

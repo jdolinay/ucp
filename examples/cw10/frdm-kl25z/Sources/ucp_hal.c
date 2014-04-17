@@ -9,6 +9,7 @@
 */
 
 #include "ucp_hal.h"
+#include "smt160_kl25.h"	/* Temperature sensor SMT160-30 */
 //#include "ucp_swpwm.h"      /*  volitelne; softwarova PWM */
 //#include "top_gb60.h"   /* ovladat modelu tepelne soustavy */
 
@@ -22,6 +23,7 @@
 uint8_t ucphal_init(void)
 {
      /* TODO:  add your hardware initialization */
+	smt160_init();
     
     // Priklad s vyuzitim softwarove PWM poskytovane v knihovne UCP 
     // ucp_pwm_setduty(1, 0);    /* Vystup na kanale 1 nastavit na 0 */

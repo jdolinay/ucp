@@ -163,13 +163,13 @@
  // TODO: should be somehow possible to define where the output goes ? - which UART...
  /** print line of text without new line
   */
- void msf_print(const char* str)    // print string
+ void uart_print(const char* str)    // print string
  {
      uart_puts(str);
  } 
  /** print line of text with new line
   */
- void msf_println(const char* str)   // print string with line end
+ void uart_println(const char* str)   // print string with line end
  {
      uart_puts(str);
      uart_putchar('\n');
@@ -178,7 +178,7 @@
  /** print string with one formatted 16-bit number 
  * @note max 8 chars for the resulting element in str!
  */
- void msf_printf16(const char* str, const char* format, uint16_t data)  
+ void uart_printf16(const char* str, const char* format, uint16_t data)  
  {
      char buffer[9];
      sprintf(buffer, format, data);
@@ -189,7 +189,7 @@
  /** print string with one formatted 32-bit number 
  * @note max 8 chars for the resulting element in str!
  */
- void msf_printf32(const char* str, const char* format, uint32_t data)  
+ void uart_printf32(const char* str, const char* format, uint32_t data)  
  {
      char buffer[12];
      sprintf(buffer, format, data);

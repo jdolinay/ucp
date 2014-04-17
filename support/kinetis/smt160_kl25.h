@@ -15,7 +15,7 @@
 #define SMT160_KL25_H_
 
 void smt160_init();
-int	 smt160_get_temp();		
+uint16_t smt160_get_temp();		
 
 
 #endif /* SMT160_KL25_H_ */

@@ -14,6 +14,7 @@
 
 // cesta do \support je v include dirs. Pak jsou podslozky podle platformy.
 #include "kinetis\uart.h"
+#include "kinetis\smt160_kl25.h"
 
 void delay(void);
 void clock_init(void);
@@ -83,7 +84,7 @@ uint32_t uart0_clk_hz;
 /* =============================== */
 int main(void)
 {
-	int counter = 0;
+	int counter = 0;	
 	
 	// jd: port clock musi byt enabled
 	/* Enable all of the port clocks. These have to be enabled to configure
@@ -117,8 +118,17 @@ int main(void)
 	   	//if ( counter == 0 )
 	   	//	ucp_app_on_sample();	// krok 3  (TODO: casovani)
 	   	sci_puts("ahoja\n ");
+	   	
+	   	// test mereni teploty 
+	   	counter = smt160_get_temp();
+	   	uart_printf16("Temp = ", "%d\n", counter / 100);
+	   	
 	   	delay();
 	   	delay();
+	   	delay();
+	    delay();
+	    delay();
+	    delay();
 	}
 	
 	return 0;
