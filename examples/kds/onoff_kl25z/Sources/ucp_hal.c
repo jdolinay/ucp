@@ -45,7 +45,7 @@ float ucphal_read_input(uint8_t channel)
     /* TODO: add code to read input for given control-channel */
     
     
-    /* Priklad pro cteni teploty pomoci ovladace pro model tepelne soustavy 
+    /* Priklad pro cteni teploty pomoci ovladace pro model tepelne soustavy */
     float tmp;
     int rawtemp;
     static float old_val = 0.0f;
@@ -62,7 +62,7 @@ float ucphal_read_input(uint8_t channel)
         old_val = tmp;
         return tmp;
     }
-    */
+
         
     return 0.0f;
 }

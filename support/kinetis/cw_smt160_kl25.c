@@ -4,8 +4,8 @@
  * 
  * @note
  * For input we can use 2 pins:
- * PTD3 (TMP0_CH3) - input capture
- * PTD4  - used as GPIO to find out if rising or falling
+ * PTA12 (TMP1_CH0) - digital pin 3 on Arduino (input capture)
+ * PTA13  - digital pin 8 on Arduino; used as GPIO to find out if rising or falling
  * 			edge generated the timer channel interrupt. 
  *
  * Principle:
@@ -26,8 +26,8 @@
  * pulse - still ok.
  *  
 */
-#include "MKL25Z4.h"
-//#include "derivative.h"	// jd
+
+#include "derivative.h"	// jd
 #include "smt160_kl25.h"
 
 // TODO: move to generic header!
@@ -42,7 +42,7 @@
   the freq. is between 1 kHz and 4 kHz, so the period is
   between 1 ms and 250 us. 
   We should not set strict limits if we do not know the CPU speed
-  but it is reasonable to assume the timer clock is max 40 MHz and
+  but it is reasonable to assume the timer clock is may 40 Mhz and
   min 1 MHz (1 us to 0.025 us per timer tick 
   Min period: 250 us --> SMT160_MIN_PERIOD = 250 for 1 us tick 
   Max period: 1 ms --> SMT160_MAX_PERIOD = 40000 */
@@ -53,10 +53,10 @@
 #define		SMT160_SUM_NUMBER	(24)
 
 /** Pin used by this driver as GPIO to detect if falling or rising edge
- * Note that we assume PTD4; Changing just the number in #define is
+ * Note that we assume PTA13; Changing just the number in #define is 
  * not enough,see its use in code.
  * */
-#define	SMT160_INPUT_PIN_NO			(4)
+#define	SMT160_INPUT_PIN_NO			(13)
 
 volatile uint16_t gsmt_start;	/* time of pulse start */
 volatile uint16_t gsmt_pulse;	/* averaged pulse length in ticks */
@@ -86,57 +86,66 @@ void smt160_init()
 	gsmt_sumcnt = 0;
 	
 	/* Enable Port A clock (pins used for input capture) */
-	SIM_SCGC5 |= SIM_SCGC5_PORTD_MASK;
+	SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK;
 	
 	/* enable input pins for TPM1 channels 0 and 1 
 	  The timer channel is Alt 3 function of the pins */
-	/* Model je na PTD3 a PTD4 = TPM0 ch 3 a 4*/
-	PORTD_PCR3 = PORT_PCR_MUX(4);		/* PTD3 = channel 3 for TPM3 */
-	PORTD_PCR4 = PORT_PCR_MUX(1);		/* using PTD4 as GPIO for deciding falling/rising */
-	GPIOD_PDDR &= ~(1 << SMT160_INPUT_PIN_NO);			/* set pin to input mode */
+	PORTA_PCR12 = PORT_PCR_MUX(3);		/* PTA12 = channel 0 for TPM1 */
+	PORTA_PCR13 = PORT_PCR_MUX(1);		/* using PTA13 as GPIO for deciding falling/rising */
+	GPIOA_PDDR &= ~(1 << SMT160_INPUT_PIN_NO);			/* set PTA13 to input mode */ 
 	
-	/* Enable clock for timer TMP0 */
-	SIM->SCGC6 |= SIM_SCGC6_TPM0_MASK;
-	// Nastavit zdroj hodin pro casovac TPM (sdileno vsemi moduly TPM)
-	// Dostupne zdroje hodinoveho signalu zavisi na CLOCK_SETUP
-	// Pro CLOCK_SETUP = 1 nebo 4 je mozno pouzit OSCERCLK (8 MHz)
-	// Pro CLOCK_SETUP = 0 (vychozi v novem projektu) PLLFLLCLK (20.97152 MHz)
-	// Mozne hodnoty:
-	// 0 - clock vypnut
-	// 1 - MCGFLLCLK nebo MCGFLLCLK/2
-	// 2 - OSCERCLK
-	// 3 - MCGIRCLK  (interni generator, 32 kHz nebo 4 MHz)
-	// !!! Pozor pri zapisu do SOPT2 nespolehat na to, ze oba bity
-	// pole TPMSRC jsou vynulovany, nestaci SOPT2[TPMSRC] |= nova_hodnota;
-	// je nutno nejprve vynulovat a pak "ORovat" novou hodnotu.
-	SIM->SOPT2 &= ~SIM_SOPT2_TPMSRC_MASK;
-	SIM->SOPT2 |= SIM_SOPT2_TPMSRC(1);
-
+	/* Enable clock for timer TMP1 */
+	SIM_SCGC6 |= SIM_SCGC6_TPM1_MASK;
 	/* and clock source */
-	//SIM_SOPT2 |= SIM_SOPT2_TPMSRC(1); // select the PLLFLLCLK as TPM clock source
+	SIM_SOPT2 |= SIM_SOPT2_TPMSRC(1); // select the PLLFLLCLK as TPM clock source
 	
 	/*  Set timer to input capture mode etc. */
-	// clock je 21 MHz prescaler je 1
-	TPM0_SC = TPM_SC_CMOD(1) | TPM_SC_PS(0);	// CMOD = 01, prescaler = 1
+	TPM1_SC = TPM_SC_CMOD(1) | TPM_SC_PS(0);	//0x08;	// CMOD = 01, prescaler = 1
 	
+	/* test TOF interrupt
+	TPM1_SC |= TPM_SC_TOIE_MASK;
+	TPM1_MOD = 10000;
+	*/
+
+#if 0
+	// Input capture config
+	// Version with 2 input pins used: channel 0 detects pulses, channel 1
+	// detects period.
+	TPM1_C0SC = 0;	/* clear any pending interrupt and set all values to default */
+	TPM1_C0SC |= TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK;	/* input capture on falling and rising edges */
+	TPM1_C0SC |= TPM_CnSC_CHIE_MASK;	/* enable channel interrupt */
 
 
+	TPM1_C1SC = 0;	/* clear any pending interrupt and set all values to default */
+	TPM1_C1SC |= TPM_CnSC_ELSA_MASK;	/* input capture on rising edges only */
+	TPM1_C1SC |= TPM_CnSC_CHIE_MASK;	/* enable channel interrupt */
+#endif
+	
 	// Input capture config
 	// Version with 1 pin used; wait for rising edge
-	TPM0_C3SC = 0;	/* clear any pending interrupt and set all values to default */
+	TPM1_C0SC = 0;	/* clear any pending interrupt and set all values to default */
 	/* input capture on rising and falling edge + enable channel interrupt */
-	TPM0_C3SC |= TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK | TPM_CnSC_CHIE_MASK;
+	TPM1_C0SC |= TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK | TPM_CnSC_CHIE_MASK;	
 		
 	
 	// Enable the interrupt
-	// Preruseni je treba povolit take v NVIC
-	// ...smazat pripadny priznak cekajiciho preruseni
-	NVIC_ClearPendingIRQ(TPM0_IRQn);
-	// ...povolit preruseni od TPM0
-	NVIC_EnableIRQ(TPM0_IRQn);
-	// ...nastavit prioritu preruseni: 0 je nejvysi, 3 nejnizsi
-	NVIC_SetPriority(TPM0_IRQn, 2);
-
+	// Note: sample code package provides function for this in arm_cm0.c; (enable_irq(interrupt);)
+	// CMSIS compatible environment should implement NVIC_EnableIRQ((IRQn_Type)interrupt);
+	// In NVIC there are 32-bit registers where each bit corresponds to 1 interrupt
+	// The number of the interrupt used in NVIC is "non-core" int number, which is the 
+	// absolute number - 16. (there are 16 core interrupts which are not controlled by NVIC)
+	// ICPR register = clear pending flag (writing 1 clears pending interrupt)
+	// ISER register = enable interrupt by writing 1 to its bit
+	NVIC_ICPR |= (1 << (INT_TPM1 - 16) );	// clear possibly pending interrupt
+	NVIC_ISER |= (1 << (INT_TPM1 - 16) );	// enable the interrupt
+	
+	// Set priority for the interrupt
+	// Bit field starting location = 8 * (IRQ mod 4) + 6 = 
+	// Zde IRQ = 18 (cislo TPM1 int v MKL25Z4.h - 16)
+	// start = 8 * 18 mod 4 + 6 = 8 * 2 + 6 = 22
+	NVIC_IPR4 = ((prio & 0x03) << 22);
+	
+	EnableInterrupts;
 	
 }
 
@@ -149,7 +158,7 @@ uint16_t smt160_get_temp()
 	uint32_t pulse, period, duty ;
 	
 	/* Get the values with disabled timer interrupt */
-	TPM0_C3SC &= ~TPM_CnSC_CHIE_MASK;	/* disable interrupt */
+	TPM1_C0SC &= ~TPM_CnSC_CHIE_MASK;	/* disable interrupt */
 	pulse = gsmt_pulse;
 	period = gsmt_period;
 	
@@ -157,7 +166,7 @@ uint16_t smt160_get_temp()
 	  new pulse */
 	gsmt_start = 0;	
 	gsmt_tmp_pulse = 0;
-	TPM0_C3SC |= TPM_CnSC_CHIE_MASK;	/* enable interrupt again */
+	TPM1_C0SC |= TPM_CnSC_CHIE_MASK;	/* enable interrupt again */
 	
 	/* Compute temperature */
 	/* DC = 0.32 + 0.0047 x T 
@@ -188,36 +197,36 @@ uint16_t smt160_get_temp()
 	return (uint16_t)pulse;
 }
 
-/* TMP0 interrupt handler
- * We need to read TPM registers to find out which TMP0 interrupt this is;
+/* TMP1 interrupt handler
+ * We need to read TPM registers to find out which TMP1 interrupt this is;
  *  
  */
-void TPM0_IRQHandler()
+void FTM1_IRQHandler()
 {
 	volatile uint16_t tmp;
 	
 	// Channel interrupt?
-	if ( (TPM0_C3SC & TPM_CnSC_CHF_MASK) != 0 )
+	if ( (TPM1_C0SC & TPM_CnSC_CHF_MASK) != 0 )
 	{		
     	// channel 0 interrupt occurred
-		TPM0_C3SC |= TPM_CnSC_CHF_MASK;		// clear the interrupt flag
+		TPM1_C0SC |= TPM_CnSC_CHF_MASK;		// clear the interrupt flag
 		       		
 		// is it rising or falling edge?
 		// We check separate pin which is used as GPIO and connected to the
 		// SMT160 output as well.
-		if ( (GPIOD_PDIR & (1 << SMT160_INPUT_PIN_NO)) != 0 )
+		if ( (GPIOA_PDIR & (1 << SMT160_INPUT_PIN_NO)) != 0 )
 		{
 			/* RISING edge detected */
 			
 			if ( gsmt_start == 0 )
 			{
 				/* start of pulse - first after our init  */
-				gsmt_start = TPM_CnV_VAL(TPM0_C3V);
+				gsmt_start = TPM_CnV_VAL(TPM1_C0V);				
 			}
 			else
 			{
 				/* end of period */
-				tmp = TPM_CnV_VAL(TPM0_C3V);
+				tmp = TPM_CnV_VAL(TPM1_C0V);
 				if ( tmp > gsmt_start )
 					tmp = tmp - gsmt_start;
 				else	/* overflow of counter while measuring */
@@ -247,7 +256,7 @@ void TPM0_IRQHandler()
 				}
 				
 				/* end of period means also start of a new period */
-				gsmt_start = TPM_CnV_VAL(TPM0_C3V);
+				gsmt_start = TPM_CnV_VAL(TPM1_C0V);			
 			}
 			
 			      
@@ -259,7 +268,7 @@ void TPM0_IRQHandler()
 			if ( gsmt_start != 0 )
 			{
 				/* end of pulse */
-				tmp = TPM_CnV_VAL(TPM0_C3V);
+				tmp = TPM_CnV_VAL(TPM1_C0V);
 				if ( tmp > gsmt_start )
 					tmp = tmp - gsmt_start;
 				else	/* overflow of counter while measuring */
@@ -274,5 +283,13 @@ void TPM0_IRQHandler()
 	
 	}  // end of channel 0 interrupt
 	
+	
+	
+	/* test for TOF interrupt
+	if ( (TPM1_SC & TPM_SC_TOF_MASK) != 0 )
+	{
+		// TOF occurred
+		TPM1_SC |= TPM_SC_TOF_MASK;	// clear TOF by writing 1
+	}*/		
 }
 

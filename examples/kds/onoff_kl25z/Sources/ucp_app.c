@@ -4,7 +4,7 @@
 * @note
 * Sablona ridici aplikace pro knihovnu UCP
 *
-* Tento soubor pridejte do projektu a implementujte zde celou funcnost aplikace.
+* Tento soubor pridejte do projektu a implementujte zde celou funkcnost aplikace.
 * Na zacatku main() zavolejte ucp_app_init() a pak
 * pravidelne s periodou vzokovani volejte ucp_app_on_sample().
 *
@@ -12,6 +12,7 @@
 
 #include "ucp_app.h"
 //#include "ucp_psd.h"
+#include "ucp_onoff.h"
 //#include "ucp_swpwm.h"
 #include "ucp_hal.h"
 //#include "ucp_plant.h"
@@ -73,7 +74,7 @@ void ucp_app_on_sample(void)
     // Priklad pro PSD regulator   
     //u = ucp_psd_step(&psd1, input, setpoint, MINU, MAXU);
     // On/off controller
-    u = ucp_onoff_step(&regulator, input, setpoint);
+    u = ucp_onoff_step(&controller, input, setpoint);
     
     /* Apply the output of controller to the plant  */
     ucphal_write_output(1, u );

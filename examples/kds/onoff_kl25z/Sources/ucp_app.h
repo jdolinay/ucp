@@ -13,7 +13,7 @@
     #define  UCP_APP_H
 
 /* Vlastni definice datovych typu, jako podle C99 */
-//#include "ucp_stdint.h"
+//#include "stdint.h"	/* standard types included in EWL */
 #include "ucp_stdint.h"	/* standard types included in EWL */
 #include "ucp_stdbool.h"	/* our own bool type */
 
