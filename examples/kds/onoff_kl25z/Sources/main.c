@@ -2,6 +2,10 @@
  Sample project for UCP library for Kinetis Design Studio IDE
  On-Off controller.
 
+ Targeted for educational kit with Kinetis KL25Z and the model of heating
+ plant connected to the MCU header.
+ Will heat to 40 C using on-off controller.
+
  Howto setup a project with UCP:
 
  1) Add #include "ucp_app.h" to your main.c
@@ -35,7 +39,7 @@
 #include "MKL25Z4.h"
 #include "ucp_app.h"
 
-static int i = 0;
+void delay(void);
 
 int main(void)
 {
@@ -43,11 +47,19 @@ int main(void)
 	ucp_app_init();
 
     /* This for loop should be replaced. By default this loop allows a single stepping. */
-    for (;;) {
-        i++;
+    while (1) {
+    	ucp_app_on_sample();
+    	delay();
     }
     /* Never leave main */
     return 0;
+}
+
+void delay(void)
+{
+	uint32_t i, counter;
+	for (i = 0; i < 800000; i++ )
+		counter++;
 }
 ////////////////////////////////////////////////////////////////////////////////
 // EOF

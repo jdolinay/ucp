@@ -2,6 +2,12 @@
 * @file ucp_hal.c 
 * @brief Hardware Abstraction Layer - MCU-specific code provided by the user.
 *
+* 2017-10-27
+* Implementation for model of heating plant connected to educational board with Kinetis KL25Z.
+* Fixed set point 40 C
+* On-Off controller.
+*
+*
 * @note Toto jsou funkce, ktere vyuziva UCP aplikace. Tyto funkce
 * musi implementovat sam uzivatel knihovny pro svuj konkretni hardware.
 * napr. pokud meri teplotu teplomerem s analogovym vystupem, bude ve
@@ -9,9 +15,12 @@
 *
 */
 
+#include "MKL25Z4.h"
 #include "ucp_hal.h"
+#include "smt160_kl25.h"
 //#include "ucp_swpwm.h"      /*  volitelne; softwarova PWM */
-//#include "top_gb60.h"   /* ovladat modelu tepelne soustavy */
+//#include "top_kl25.h"   /* ovladat modelu tepelne soustavy */
+
 
 /** Inicializace potrebna pro funkce zde implementovane.
 * 
@@ -28,9 +37,16 @@ uint8_t ucphal_init(void)
     // ucp_pwm_setduty(1, 0);    /* Vystup na kanale 1 nastavit na 0 */
     
     // Priklad: model tepelne soustavy rizeny pomoci vlastniho ovladace 
-    // InitTop(); 
-           
-    return 0;    
+	/* Inicializace ovladace snimace teploty */
+	smt160_init();
+
+	/* Inicializace pinu pouziteho pro ovladani topeni jako vystup */
+	/* Enable Port C clock (pin used for output ) */
+	SIM_SCGC5 |= SIM_SCGC5_PORTE_MASK;
+	GPIOE_PDDR |= (1 << 31);		// output pin to control the heater
+	PORTE_PCR31 = PORT_PCR_MUX(1); /* E31 set to function Alt1 (GPIO)*/
+
+	return 0;
 }
 
 /** Nacteni vstupu pro dany kanal
@@ -55,7 +71,7 @@ float ucphal_read_input(uint8_t channel)
     {        
         // podporujeme jen 1 kanal; pokud je kanal jiny nez 1, vracime 0.
         // Ovladac vraci teplotu x 100, napr. 2500 pro 25 C
-        rawtemp = GetTemp();
+        rawtemp = smt160_get_temp();
         if ( rawtemp <= 0 )      // pokud nejsou platna data, vraci GetTemp() nulu.
             return old_val;
         tmp = (float)rawtemp / 100;
@@ -80,6 +96,10 @@ float ucphal_read_input(uint8_t channel)
 void ucphal_write_output(uint8_t channel, float value)
 {
     /* TODO:  implement */
+	if ( value >= 0.5 )
+		ucphal_write_pin(1, true);
+	else
+		ucphal_write_pin(1, false);
     
     /* Priklad pro pouziti naseho SW PWM 
     Predpokladame, ze regulator vraci akcni zasah jako hodnotu 0 az 100 */
@@ -100,7 +120,7 @@ float ucphal_read_setpoint(uint8_t channel)
 {
     /* TODO:  implement */
     /* Napriklad zde muze byt ziskani hodnoty podle pozice potenciometru na kitu... */
-    return 0.0f;    
+    return 40.0f;
 }
 
 /* --- Nepovinne funkce ----- */
@@ -118,15 +138,16 @@ void ucphal_write_pin(uint8_t channel, bool value)
 {
     /* TODO:  implement */
     /* Priklad pro model tepelne sosustavy s vyuzitim ovladace, tj. nemusime 
-    primo na piny, ale volame radeji funkce ovladace:
+    primo na piny, ale volame radeji funkce ovladace: */
     if ( channel == 1 )
     {  
-         if (value)
-            TopOn();
-         else
-            TopOff();
+         if (value) {
+        	 GPIOE_PDOR |= (1 << 31);
+         } else {
+        	 GPIOE_PDOR &= ~(1 << 31);
+         }
     }
-    */
     
+
     // ostatni kanaly ignorujeme
 }
