@@ -4,6 +4,9 @@ Projekt regulatoru
 Pro HCS08 a pak i pro kinetis.
 
 *****************************************************
+10.11.2017
+Pridana ukazka pro IDE Kinetis Design Studio a FRDM-KL25Z on-off.
+
 17.4.2014
 Projekt v podstatì prozatím možno uzavøít. 
 Stav:
